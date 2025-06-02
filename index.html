@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Teste de Componentes</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { background: linear-gradient(135deg, #6e8efb, #a777e3); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 20px; }
+    .app { background: #fff; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); width: 100%; max-width: 600px; display: flex; flex-direction: column; gap: 20px; }
+
+    h1 { text-align: center; font-size: 1.8rem; color: #333; margin-bottom: 10px; }
+
+    .field { display: flex; flex-direction: column; gap: 8px; }
+
+    label { font-weight: 600; color: #555; }
+
+    select, input[type="text"] {
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: border 0.3s;
+    }
+    select:focus, input[type="text"]:focus { border-color: #6e8efb; outline: none; }
+
+    fieldset { border: none; padding: 0; }
+
+    .components {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* duas colunas */
+      gap: 15px;
+    }
+
+    .component {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.2s ease, border 0.3s ease, background-color 0.3s ease;
+      border: 3px solid transparent;
+      height: 90px;
+    }
+    .component:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+    }
+
+    .component span {
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+      pointer-events: none;
+      font-size: 1rem;
+    }
+
+    /* Estados */
+
+    .status-na {
+      background-color: #f9f9f9;
+      border-color: transparent;
+      color: #aaa;
+    }
+    .status-ok {
+      background-color: #d4edda;
+      border-color: #28a745;
+      color: #155724;
+    }
+    .status-falha {
+      background-color: #f8d7da;
+      border-color: #dc3545;
+      color: #721c24;
+    }
+
+    button[type="submit"] {
+      padding: 15px;
+      background: #6e8efb;
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+    button[type="submit"]:hover { background: #5a75d1; transform: translateY(-3px); }
+
+    #status { text-align: center; font-size: 1rem; font-weight: bold; color: #155724; }
+
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+
+<div class="app">
+  <h1>Registro de Testes</h1>
+  
+  <form id="dataForm">
+
+    <div class="field">
+      <label for="modelo">Modelo</label>
+      <select id="modelo" name="modelo" required>
+        <option value="" disabled selected>Selecione o modelo</option>
+        <option value="HF801">HF801</option>
+        <option value="HF810">HF810</option>
+        <option value="HF900">HF900</option>
+        <option value="HF405">HF405</option>
+        <option value="HF918">HF918</option>
+      </select>
+    </div>
+
+    <div class="field hidden" id="clienteField">
+      <label for="cliente">Cliente</label>
+      <input type="text" id="cliente" name="cliente" placeholder="Nome do cliente" required />
+    </div>
+
+    <fieldset class="hidden" id="componentesField">
+      <legend style="font-weight:bold; margin-bottom:10px; color:#555;">Componentes</legend>
+      <div class="components" id="components"></div>
+    </fieldset>
+
+    <button type="submit" class="hidden" id="enviarBtn">Enviar</button>
+  </form>
+
+  <div id="status"></div>
+</div>
+
+<script>
+  const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxVtY1ueaHb6qPed3wr64ts9guFpJgRIDNl_cRpfj7cKhtXjRw8I-E9Hspzx89xchFJdg/exec';
+
+  const componentes = [
+    { id: 'aht10', label: 'AHT10' },
+    { id: 'botao_esquerdo', label: 'Botão Esquerdo' },
+    { id: 'botao_direito', label: 'Botão Direito' },
+    { id: 'botao_reset', label: 'Botão Reset' },
+    { id: 'certificado', label: 'Certificado' },
+    { id: 'conector_mola', label: 'Conector Mola' },
+    { id: 'esp32', label: 'ESP32' },
+    { id: 'display', label: 'Display' },
+    { id: 'led_azul', label: 'LED Azul' },
+    { id: 'ledrgb', label: 'LED RGB' },
+    { id: 'ldr', label: 'LDR' },
+    { id: 'ntc', label: 'NTC' },
+    { id: 'relay', label: 'Relay' },
+    { id: 'tm1637', label: 'TM1637' },
+    { id: 'watchdog', label: 'Watchdog' },
+    { id: 'botao_central', label: 'Botão Central' }
+  ];
+
+  const hideMap = {
+    'HF801': ['aht10'],
+    'HF810': ['aht10'],
+    'HF900': ['aht10'],
+    'HF405': ['aht10', 'ntc'],
+    'HF918': ['aht10', 'ntc']
+  };
+
+  const modeloSelect = document.getElementById('modelo');
+  const clienteField = document.getElementById('clienteField');
+  const componentesField = document.getElementById('componentesField');
+  const componentsDiv = document.getElementById('components');
+  const enviarBtn = document.getElementById('enviarBtn');
+  const form = document.getElementById('dataForm');
+  const statusDiv = document.getElementById('status');
+
+  let estadoComponentes = {};
+
+  modeloSelect.addEventListener('change', () => {
+    const modelo = modeloSelect.value;
+
+    clienteField.classList.remove('hidden');
+    componentesField.classList.remove('hidden');
+    enviarBtn.classList.remove('hidden');
+
+    gerarComponentes(modelo);
+  });
+
+  function gerarComponentes(modelo) {
+    componentsDiv.innerHTML = '';
+    estadoComponentes = {};
+
+    const toHide = hideMap[modelo] || [];
+
+    componentes.forEach(comp => {
+      if (!toHide.includes(comp.id)) {
+        estadoComponentes[comp.id] = 'N/A';
+
+        const div = document.createElement('div');
+        div.classList.add('component', 'status-na');
+
+        const nome = document.createElement('span');
+        nome.textContent = comp.label;
+
+        div.appendChild(nome);
+        componentsDiv.appendChild(div);
+
+        div.addEventListener('click', () => {
+          switch (estadoComponentes[comp.id]) {
+            case 'N/A':
+              estadoComponentes[comp.id] = 'OK';
+              div.classList.replace('status-na', 'status-ok');
+              break;
+            case 'OK':
+              estadoComponentes[comp.id] = 'FALHA';
+              div.classList.replace('status-ok', 'status-falha');
+              break;
+            case 'FALHA':
+              estadoComponentes[comp.id] = 'N/A';
+              div.classList.replace('status-falha', 'status-na');
+              break;
+          }
+        });
+      } else {
+        estadoComponentes[comp.id] = 'N/A';
+      }
+    });
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    statusDiv.textContent = '';
+
+    const data = {
+      modelo: form.modelo.value,
+      cliente: form.cliente.value
+    };
+
+    for (let comp of componentes) {
+      data[comp.id] = estadoComponentes[comp.id] || 'N/A';
+    }
+
+    data.data = new Date().toISOString();
+
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).then(() => {
+      statusDiv.style.color = '#155724';
+      statusDiv.textContent = 'Dados enviados com sucesso!';
+
+      form.reset();
+      componentsDiv.innerHTML = '';
+      clienteField.classList.add('hidden');
+      componentesField.classList.add('hidden');
+      enviarBtn.classList.add('hidden');
+      estadoComponentes = {};
+    }).catch(err => {
+      statusDiv.style.color = '#721c24';
+      statusDiv.textContent = 'Erro: ' + err.message;
+    });
+  });
+</script>
+</body>
+</html>
