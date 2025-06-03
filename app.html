@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registro de Testes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #007bff;
+            --primary-dark: #0056b3;
+            --background-gradient: linear-gradient(135deg, #f0f2f5, #e0e4eb);
+            --card-background: #ffffff;
+            --text-color: #343a40;
+            --placeholder-color: #6c757d;
+            --border-color: #ced4da;
+            --focus-border-color: var(--primary-color);
+            --shadow-light: rgba(0, 0, 0, 0.05);
+            --shadow-medium: rgba(0, 0, 0, 0.1);
+            --success-bg: #d4edda;
+            --success-border: #28a745;
+            --success-text: #155724;
+            --failure-bg: #f8d7da;
+            --failure-border: #dc3545;
+            --failure-text: #721c24;
+            --na-bg: #e9ecef;
+            --na-border: #adb5bd;
+            --na-text: #495057;
+            --delete-bg: #fdeded;
+            --delete-border: #dc3545;
+            --delete-text: #721c24;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            background: var(--background-gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--text-color);
+        }
+
+        .app {
+            background: var(--card-background);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px var(--shadow-medium);
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        label {
+            font-weight: 500;
+            color: var(--text-color);
+            font-size: 0.95rem;
+        }
+
+        select,
+        input[type="text"] {
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            color: var(--text-color);
+            background-color: var(--card-background);
+            box-shadow: inset 0 1px 2px var(--shadow-light);
+        }
+
+        select::placeholder,
+        input[type="text"]::placeholder {
+            color: var(--placeholder-color);
+        }
+
+        select:focus,
+        input[type="text"]:focus {
+            border-color: var(--focus-border-color);
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+            outline: none;
+        }
+
+        fieldset {
+            border: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        legend {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+
+        .components {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .component {
+            background: var(--na-bg);
+            padding: 20px 15px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px var(--shadow-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease, border-color 0.3s ease;
+            border: 1px solid var(--na-border);
+            min-height: 90px;
+            text-align: center;
+            position: relative; /* Adicionado para posicionar o textarea */
+        }
+
+        .component:hover {
+            box-shadow: 0 6px 15px var(--shadow-medium);
+        }
+
+        .component:active {
+            transform: scale(0.95);
+        }
+
+        .component .icon {
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            line-height: 1;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .component span {
+            font-weight: 500;
+            font-size: 1rem;
+            color: var(--na-text);
+            pointer-events: none;
+            margin-bottom: 5px; /* Espaço para o textarea */
+        }
+
+        .component textarea {
+            width: calc(100% - 10px); /* Ajustar largura */
+            padding: 5px 8px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 0.8rem;
+            resize: vertical;
+            min-height: 30px;
+            max-height: 80px;
+            box-shadow: inset 0 1px 2px var(--shadow-light);
+            margin-top: 5px;
+            color: var(--text-color);
+            background-color: var(--card-background);
+        }
+        .component textarea::placeholder {
+            color: var(--placeholder-color);
+        }
+        .component textarea:focus {
+            border-color: var(--focus-border-color);
+            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15);
+            outline: none;
+        }
+
+
+        .status-na {
+            background-color: var(--na-bg);
+            border-color: var(--na-border);
+        }
+        .status-na span { color: var(--na-text); }
+        .status-na .icon { color: var(--na-text); }
+
+        .status-ok {
+            background-color: var(--success-bg);
+            border-color: var(--success-border);
+        }
+        .status-ok span { color: var(--success-text); }
+        .status-ok .icon {
+            color: var(--success-border);
+            animation: pulseGreen 0.6s ease-out;
+        }
+
+        .status-falha {
+            background-color: var(--failure-bg);
+            border-color: var(--failure-border);
+            padding-bottom: 10px; /* Mais espaço para o textarea */
+            min-height: 120px; /* Aumenta a altura para acomodar o textarea */
+        }
+        .status-falha span { color: var(--failure-text); }
+        .status-falha .icon {
+            color: var(--failure-border);
+            animation: shakeRed 0.6s ease-out;
+        }
+
+        @keyframes pulseGreen {
+            0% { transform: scale(0.8); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes shakeRed {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-5px); }
+            40%, 80% { transform: translateX(5px); }
+        }
+
+        button[type="submit"] {
+            padding: 14px;
+            background: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+            margin-top: 15px;
+            box-shadow: 0 4px 10px var(--shadow-medium);
+        }
+
+        button[type="submit"]:hover:not(:disabled) {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px var(--shadow-medium);
+        }
+
+        button[type="submit"]:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+        }
+
+        button[type="submit"]:active:not(:disabled) {
+            transform: scale(0.98);
+        }
+
+        #status {
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+        #status.success {
+            background-color: var(--success-bg);
+            color: var(--success-text);
+            border-color: var(--success-border);
+        }
+        #status.error {
+            background-color: var(--failure-bg);
+            color: var(--failure-text);
+            border-color: var(--failure-border);
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 550px) {
+            .app {
+                padding: 20px;
+                gap: 15px;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            .components {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            .component {
+                min-height: 80px;
+                padding: 15px 10px;
+            }
+            .component .icon {
+                font-size: 1.8rem;
+            }
+            .component span {
+                font-size: 0.9rem;
+            }
+            button[type="submit"] {
+                font-size: 0.9rem;
+                padding: 12px;
+            }
+            label, legend {
+                font-size: 0.9rem;
+            }
+            select, input[type="text"] {
+                padding: 10px;
+            }
+            .status-falha {
+                min-height: 100px; /* Ajusta a altura mínima para mobile */
+            }
+        }
+
+        /* Estilos para o Modal de Confirmação */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background: var(--card-background);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 500px;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .modal-overlay.visible .modal-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .modal-content h2 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        /* Para o modal de exclusão */
+        .modal-content.delete h2 {
+            color: var(--failure-border);
+        }
+
+        .modal-content p {
+            font-size: 1rem;
+            line-height: 1.5;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .modal-content textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            resize: vertical;
+            color: var(--text-color);
+            background-color: var(--card-background);
+            box-shadow: inset 0 1px 2px var(--shadow-light);
+            margin-top: 10px;
+        }
+
+        .modal-content textarea::placeholder {
+            color: var(--placeholder-color);
+        }
+
+        .modal-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.1s ease;
+        }
+
+        .modal-actions button.confirm {
+            background: var(--primary-color);
+            color: #fff;
+        }
+
+        .modal-actions button.confirm:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .modal-actions button.cancel {
+            background: #6c757d;
+            color: #fff;
+        }
+
+        .modal-actions button.cancel:hover {
+            background: #5a6268;
+            transform: translateY(-1px);
+        }
+
+        /* Estilo para botão de exclusão no modal */
+        .modal-actions button.delete-btn {
+            background: var(--failure-border);
+            color: #fff;
+        }
+        .modal-actions button.delete-btn:hover {
+            background: #a71d2a;
+            transform: translateY(-1px);
+        }
+
+        /* Estilos para a Tabela de Dados */
+        .data-table-container {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--card-background);
+            box-shadow: inset 0 1px 2px var(--shadow-light);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        .data-table th, .data-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-table th {
+            background-color: var(--primary-color);
+            color: #fff;
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .data-table tbody tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .data-table tbody tr:hover {
+            background-color: #e2e6ea;
+        }
+        /* Estilo para linha pressionada (clique longo) */
+        .data-table tbody tr.long-press-active {
+            background-color: var(--delete-bg);
+            border: 1px solid var(--delete-border);
+            box-shadow: 0 0 5px var(--delete-border);
+        }
+
+        .data-table td.status-ok-cell { color: var(--success-text); font-weight: 500; }
+        .data-table td.status-falha-cell { color: var(--failure-text); font-weight: 500; }
+        .data-table td.status-na-cell { color: var(--na-text); }
+
+        .loading-message {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.1rem;
+            color: var(--text-color);
+        }
+
+        /* Botão de visualização de registros */
+        .view-records-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .view-records-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .view-records-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Estilos para o modal de visualização de registros */
+        .records-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .records-modal.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .records-content {
+            background: var(--card-background);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .records-modal.visible .records-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .records-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .records-header h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .close-records-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: color 0.2s ease;
+        }
+
+        .close-records-btn:hover {
+            color: var(--primary-dark);
+        }
+
+        .records-status {
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: 500;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .records-status.success {
+            background-color: var(--success-bg);
+            color: var(--success-text);
+            border-color: var(--success-border);
+        }
+        .records-status.error {
+            background-color: var(--failure-bg);
+            color: var(--failure-text);
+            border-color: var(--failure-border);
+        }
+
+        /* Estilos para o Modal de Exclusão - Garantir que fique na frente de tudo */
+        #confirmDeleteModal {
+            z-index: 1002;
+        }
+
+        /* Botão de ajuda */
+        .help-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            z-index: 999;
+        }
+
+        .help-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .help-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Modal do Guia de Uso */
+        .guide-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1003;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .guide-modal.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .guide-content {
+            background: var(--card-background);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 700px;
+            max-height: 80vh;
+            overflow-y: auto;
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .guide-modal.visible .guide-content {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .guide-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .guide-header h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin: 0;
+        }
+
+        .close-guide-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: color 0.2s ease;
+        }
+
+        .close-guide-btn:hover {
+            color: var(--primary-dark);
+        }
+
+        .guide-section {
+            margin-bottom: 20px;
+        }
+
+        .guide-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .guide-section p {
+            margin-bottom: 10px;
+            line-height: 1.5;
+        }
+
+        .guide-section ul {
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .guide-section li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+
+<div class="app">
+    <h1>Registro de Testes de Componentes</h1>
+
+    <form id="dataForm">
+        <div class="field">
+            <label for="modelo">Modelo</label>
+            <select id="modelo" name="modelo" required>
+                <option value="" disabled selected>Selecione o modelo</option>
+                <option value="HF801">HF801</option>
+                <option value="HF810">HF810</option>
+                <option value="HF900">HF900</option>
+                <option value="HF405">HF405</option>
+                <option value="HF918">HF918</option>
+            </select>
+        </div>
+
+        <div class="field hidden" id="clienteField">
+            <label for="cliente">Cliente</label>
+            <input type="text" id="cliente" name="cliente" placeholder="Nome do cliente" required />
+        </div>
+
+        <fieldset class="hidden" id="componentesField">
+            <legend>Componentes</legend>
+            <div class="components" id="components"></div>
+        </fieldset>
+
+        <button type="submit" class="hidden" id="enviarBtn">Enviar Teste</button>
+    </form>
+    <div id="status" aria-live="polite"></div>
+</div>
+
+<button class="help-btn" id="helpBtn" title="Ajuda">
+    <i class="fas fa-question"></i>
+</button>
+
+<button class="view-records-btn" id="viewRecordsBtn" title="Ver Registros">
+    <i class="fas fa-list"></i>
+</button>
+
+<div class="guide-modal" id="guideModal">
+    <div class="guide-content">
+        <div class="guide-header">
+            <h2>Guia de Uso</h2>
+            <button class="close-guide-btn" id="closeGuideBtn">&times;</button>
+        </div>
+        
+        <div class="guide-section">
+            <h3>Como registrar um teste</h3>
+            <ol>
+                <li>Selecione o modelo do dispositivo</li>
+                <li>Informe o nome do cliente</li>
+                <li>Clique em cada componente para alterar seu status:
+                    <ul>
+                        <li><strong>N/A</strong>: Não aplicável</li>
+                        <li><strong>OK</strong>: Componente funcionando</li>
+                        <li><strong>FALHA</strong>: Componente com problema (se for falha, você pode adicionar uma observação)</li>
+                    </ul>
+                </li>
+                <li>Clique em "Enviar Teste" para salvar</li>
+            </ol>
+        </div>
+
+        <div class="guide-section">
+            <h3>Como visualizar registros</h3>
+            <p>Clique no botão <i class="fas fa-list"></i> no canto inferior direito para ver todos os testes registrados.</p>
+        </div>
+
+        <div class="guide-section">
+            <h3>Como excluir um registro</h3>
+            <p>Na tela de visualização de registros, mantenha pressionado um registro por 5 segundos para abrir a opção de exclusão.</p>
+        </div>
+
+        <div class="guide-section">
+            <h3>Dúvidas frequentes</h3>
+            <p><strong>Q:</strong> Posso editar um teste depois de enviado?<br>
+            <strong>A:</strong> Não, após enviado o teste não pode ser editado. Caso necessário, você deve excluir o registro incorreto e criar um novo.</p>
+            
+            <p><strong>Q:</strong> O que significa N/A em um componente?<br>
+            <strong>A:</strong> Significa que aquele componente não está presente no modelo testado ou não foi verificado.</p>
+        </div>
+    </div>
+</div>
+
+<div class="records-modal" id="recordsModal">
+    <div class="records-content">
+        <div class="records-header">
+            <h2>Registros de Testes</h2>
+            <button class="close-records-btn" id="closeRecordsBtn">&times;</button>
+        </div>
+        <div class="loading-message" id="loadingData">Carregando dados...</div>
+        <div class="data-table-container">
+            <table class="data-table" id="dataTable">
+                <thead>
+                    <tr id="tableHeaders">
+                        </tr>
+                </thead>
+                <tbody id="tableBody">
+                    </tbody>
+            </table>
+        </div>
+        <div id="recordsStatus" class="records-status"></div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="confirmSendModal">
+    <div class="modal-content">
+        <h2>Confirmar Envio?</h2>
+        <p>Você tem certeza que deseja enviar este registro de teste?</p>
+        <div class="field">
+            <label for="observacao">Observação Geral (opcional)</label>
+            <textarea id="observacao" placeholder="Adicione qualquer observação relevante para o teste geral aqui..."></textarea>
+        </div>
+        <div class="modal-actions">
+            <button type="button" class="cancel" id="cancelSend">Cancelar</button>
+            <button type="button" class="confirm" id="confirmSend">Confirmar e Enviar</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="confirmDeleteModal">
+    <div class="modal-content delete">
+        <h2>Apagar Registro?</h2>
+        <p>Você tem certeza que deseja *apagar* este registro?</p>
+        <p>Registro: <strong id="deleteRecordInfo"></strong></p>
+        <div class="modal-actions">
+            <button type="button" class="cancel" id="cancelDelete">Cancelar</button>
+            <button type="button" class="delete-btn" id="confirmDelete">Sim, Apagar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwiuM293htyq127ooTJKaOXpPTpbLGchGVhZyCNIPpRmC4rIBvf-CxX9gxDAg6u-Z6sew/exec';
+
+    const componentes = [
+        { id: 'aht10', label: 'AHT10' },
+        { id: 'botao_esquerdo', label: 'Botão Esquerdo' },
+        { id: 'botao_central', label: 'Botão Central' },
+        { id: 'botao_direito', label: 'Botão Direito' },
+        { id: 'botao_reset', label: 'Botão Reset' },
+        { id: 'certificado', label: 'Certificado' },
+        { id: 'conector_mola', label: 'Conector Mola' },
+        { id: 'esp32', label: 'ESP32' },
+        { id: 'display', label: 'Display' },
+        { id: 'led_azul', label: 'LED Azul' },
+        { id: 'ledrgb', label: 'LED RGB' },
+        { id: 'ldr', label: 'LDR' },
+        { id: 'ntc', label: 'NTC' },
+        { id: 'relay', label: 'Relay' },
+        { id: 'tm1637', label: 'TM1637' },
+        { id: 'watchdog', label: 'Watchdog' }
+    ];
+
+    const STATUS_NA = 'N/A';
+    const STATUS_OK = 'OK';
+    const STATUS_FALHA = 'FALHA';
+
+    const statusIcons = {
+        [STATUS_NA]: 'fas fa-question',
+        [STATUS_OK]: 'fas fa-check-circle',
+        [STATUS_FALHA]: 'fas fa-exclamation-triangle'
+    };
+
+    const statusCycle = [STATUS_NA, STATUS_OK, STATUS_FALHA];
+
+    const hideMap = {
+        'HF801': ['aht10'],
+        'HF810': ['aht10'],
+        'HF900': ['aht10'],
+        'HF405': ['aht10', 'ntc'],
+        'HF918': ['ntc']
+    };
+
+    // Elementos do formulário
+    const modeloSelect = document.getElementById('modelo');
+    const clienteInput = document.getElementById('cliente');
+    const clienteField = document.getElementById('clienteField');
+    const componentesField = document.getElementById('componentesField');
+    const componentsDiv = document.getElementById('components');
+    const enviarBtn = document.getElementById('enviarBtn');
+    const form = document.getElementById('dataForm');
+    const statusDiv = document.getElementById('status');
+
+    // Elementos do Modal de Envio
+    const confirmSendModal = document.getElementById('confirmSendModal');
+    const observacaoTextarea = document.getElementById('observacao');
+    const confirmSendBtn = document.getElementById('confirmSend');
+    const cancelSendBtn = document.getElementById('cancelSend');
+
+    // Elementos do Modal de Exclusão
+    const confirmDeleteModal = document.getElementById('confirmDeleteModal');
+    const deleteRecordInfo = document.getElementById('deleteRecordInfo');
+    const confirmDeleteBtn = document.getElementById('confirmDelete');
+    const cancelDeleteBtn = document.getElementById('cancelDelete');
+    let recordToDelete = null; // Agora armazenará o objeto completo do registro, incluindo a data exata.
+
+    // Elementos do Modal de Visualização de Registros
+    const viewRecordsBtn = document.getElementById('viewRecordsBtn');
+    const recordsModal = document.getElementById('recordsModal');
+    const closeRecordsBtn = document.getElementById('closeRecordsBtn');
+    const tableHeaders = document.getElementById('tableHeaders');
+    const tableBody = document.getElementById('tableBody');
+    const loadingData = document.getElementById('loadingData');
+    const recordsStatusDiv = document.getElementById('recordsStatus');
+
+    // Elementos do Guia de Uso
+    const helpBtn = document.getElementById('helpBtn');
+    const guideModal = document.getElementById('guideModal');
+    const closeGuideBtn = document.getElementById('closeGuideBtn');
+
+    let estadoComponentes = {}; // Armazena { id: { status: 'OK', obs: 'Erro de cor' } }
+    enviarBtn.dataset.originalHtml = enviarBtn.innerHTML;
+
+    // --- Funções para o formulário ---
+    modeloSelect.addEventListener('change', () => {
+        const modelo = modeloSelect.value;
+        clienteInput.value = '';
+        clienteField.classList.remove('hidden');
+        componentesField.classList.remove('hidden');
+        enviarBtn.classList.remove('hidden');
+        statusDiv.textContent = '';
+        statusDiv.className = '';
+        generarComponentes(modelo);
+        updateHelpButtonVisibility();
+    });
+
+    function generarComponentes(modelo) {
+        componentsDiv.innerHTML = '';
+        estadoComponentes = {};
+
+        let effectiveHideList = [...(hideMap[modelo] || [])];
+        const botaoCentralId = 'botao_central';
+
+        if (modelo === 'HF918') {
+            const index = effectiveHideList.indexOf(botaoCentralId);
+            if (index > -1) {
+                effectiveHideList.splice(index, 1);
+            }
+        } else {
+            if (!effectiveHideList.includes(botaoCentralId)) {
+                effectiveHideList.push(botaoCentralId);
+            }
+        }
+
+        componentes.forEach(comp => {
+            if (!effectiveHideList.includes(comp.id)) {
+                estadoComponentes[comp.id] = { status: STATUS_NA, obs: '' };
+
+                const div = document.createElement('div');
+                div.classList.add('component', 'status-na');
+                div.dataset.componentId = comp.id;
+
+                const icon = document.createElement('i');
+                icon.classList.add('icon', ...statusIcons[STATUS_NA].split(' '));
+
+                const nome = document.createElement('span');
+                nome.textContent = comp.label;
+
+                const obsTextarea = document.createElement('textarea');
+                obsTextarea.classList.add('component-obs', 'hidden');
+                obsTextarea.placeholder = 'Detalhe a falha aqui...';
+                obsTextarea.addEventListener('click', (e) => e.stopPropagation()); // Impede que o clique no textarea mude o status
+                obsTextarea.addEventListener('input', (e) => {
+                    estadoComponentes[comp.id].obs = e.target.value;
+                });
+
+
+                div.appendChild(icon);
+                div.appendChild(nome);
+                div.appendChild(obsTextarea); // Adiciona o textarea ao div do componente
+                componentsDiv.appendChild(div);
+
+                div.addEventListener('click', () => {
+                    let currentStatus = estadoComponentes[comp.id].status;
+                    let currentIndex = statusCycle.indexOf(currentStatus);
+                    let nextIndex = (currentIndex + 1) % statusCycle.length;
+                    let newStatus = statusCycle[nextIndex];
+
+                    estadoComponentes[comp.id].status = newStatus;
+
+                    div.classList.remove('status-na', 'status-ok', 'status-falha');
+                    let statusClassSuffix = newStatus.toLowerCase();
+                    if (newStatus === STATUS_NA) {
+                        statusClassSuffix = 'na';
+                    }
+                    div.classList.add(`status-${statusClassSuffix}`);
+
+                    icon.className = 'icon';
+                    icon.classList.add(...statusIcons[newStatus].split(' '));
+
+                    // Mostra ou esconde o textarea de observação
+                    if (newStatus === STATUS_FALHA) {
+                        obsTextarea.classList.remove('hidden');
+                        obsTextarea.focus(); // Foca no campo para facilitar a digitação
+                    } else {
+                        obsTextarea.classList.add('hidden');
+                        obsTextarea.value = ''; // Limpa a observação se o status não for FALHA
+                        estadoComponentes[comp.id].obs = '';
+                    }
+                });
+            } else {
+                // Se o componente estiver na hideList, defina seu estado inicial como N/A sem criar o elemento visual
+                estadoComponentes[comp.id] = { status: STATUS_NA, obs: '' };
+            }
+        });
+    }
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        statusDiv.textContent = '';
+        statusDiv.className = '';
+        enviarBtn.disabled = true;
+        confirmSendModal.classList.add('visible');
+        observacaoTextarea.focus();
+    });
+
+    confirmSendBtn.addEventListener('click', () => {
+        confirmSendModal.classList.remove('visible');
+        enviarBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+        enviarBtn.disabled = true;
+        enviarDados();
+    });
+
+    cancelSendBtn.addEventListener('click', () => {
+        confirmSendModal.classList.remove('visible');
+        enviarBtn.disabled = false;
+        enviarBtn.innerHTML = enviarBtn.dataset.originalHtml;
+        observacaoTextarea.value = '';
+    });
+
+    function enviarDados() {
+        const data = {
+            action: 'create',
+            data: new Date().toISOString(), // Enviando data/hora exata do envio
+            modelo: form.modelo.value,
+            cliente: form.cliente.value,
+            observacao: observacaoTextarea.value
+        };
+
+        for (let comp of componentes) {
+            const compState = estadoComponentes[comp.id];
+            if (compState) {
+                // Se houver observação para o componente, adicione-a ao valor do status
+                data[comp.id] = compState.status;
+                if (compState.status === STATUS_FALHA && compState.obs.trim() !== '') {
+                    data[comp.id] += ` (${compState.obs.trim()})`;
+                }
+            } else {
+                data[comp.id] = STATUS_NA; // Garante que componentes ocultos sejam N/A
+            }
+        }
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        }).then(() => {
+            statusDiv.classList.add('success');
+            statusDiv.textContent = 'Dados enviados com sucesso!';
+
+            form.reset();
+            clienteInput.value = '';
+            componentsDiv.innerHTML = '';
+            clienteField.classList.add('hidden');
+            componentesField.classList.add('hidden');
+            enviarBtn.classList.add('hidden');
+            estadoComponentes = {}; // Resetar estado dos componentes
+            observacaoTextarea.value = '';
+            updateHelpButtonVisibility();
+        }).catch(err => {
+            statusDiv.classList.add('error');
+            statusDiv.textContent = 'Erro ao enviar os dados: ' + err.message;
+        }).finally(() => {
+            enviarBtn.disabled = false;
+            enviarBtn.innerHTML = enviarBtn.dataset.originalHtml;
+        });
+    }
+
+    // --- Funções para Visualização de Dados e Exclusão ---
+    viewRecordsBtn.addEventListener('click', () => {
+        recordsModal.classList.add('visible');
+        fetchDataAndDisplay();
+    });
+
+    closeRecordsBtn.addEventListener('click', () => {
+        recordsModal.classList.remove('visible');
+    });
+
+    async function fetchDataAndDisplay() {
+        loadingData.classList.remove('hidden');
+        recordsStatusDiv.textContent = '';
+        tableBody.innerHTML = '';
+        tableHeaders.innerHTML = '';
+
+        try {
+            const response = await fetch(SCRIPT_URL, { method: 'GET' });
+            if (!response.ok) {
+                throw new Error(`Erro HTTP: ${response.status}`);
+            }
+            const data = await response.json();
+
+            if (data.length === 0) {
+                recordsStatusDiv.classList.remove('success', 'error');
+                recordsStatusDiv.textContent = 'Nenhum registro encontrado.';
+                loadingData.classList.add('hidden');
+                return;
+            }
+
+            // Precisamos garantir que a coluna 'data' seja a primeira nos headers para o script do Apps Script original.
+            // Se o seu Apps Script busca e deleta pela COLUNA A (data/hora), ela deve vir primeiro.
+            const headersOrder = ['data', 'modelo', 'cliente', 'observacao', ...componentes.map(c => c.id)];
+            const uniqueHeaders = Array.from(new Set(headersOrder.concat(Object.keys(data[0]))));
+            const finalHeaders = uniqueHeaders.filter(header => header !== 'id'); // Remove a coluna 'id' se existir
+            
+            tableHeaders.innerHTML = ''; // Limpa cabeçalhos antigos
+            finalHeaders.forEach(header => {
+                const th = document.createElement('th');
+                th.textContent = formatHeader(header);
+                tableHeaders.appendChild(th);
+            });
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+                // Armazena a data original (do Google Sheets) no dataset para exclusão
+                row.dataset.recordRawDate = item.data; 
+                row.dataset.recordModelo = item.modelo;
+                row.dataset.recordCliente = item.cliente; // Adicionado para exibir no modal de exclusão
+
+                let pressTimer;
+                const PRESS_DURATION = 5000;
+
+                row.addEventListener('mousedown', (e) => {
+                    e.preventDefault();
+                    row.classList.add('long-press-active');
+                    pressTimer = setTimeout(() => {
+                        row.classList.remove('long-press-active');
+                        showDeleteConfirmation(item); // Passa o item completo
+                    }, PRESS_DURATION);
+                });
+
+                row.addEventListener('mouseup', () => {
+                    clearTimeout(pressTimer);
+                    row.classList.remove('long-press-active');
+                });
+
+                row.addEventListener('mouseleave', () => {
+                    clearTimeout(pressTimer);
+                    row.classList.remove('long-press-active');
+                });
+
+                row.addEventListener('touchstart', (e) => {
+                    e.preventDefault();
+                    row.classList.add('long-press-active');
+                    pressTimer = setTimeout(() => {
+                        row.classList.remove('long-press-active');
+                        showDeleteConfirmation(item); // Passa o item completo
+                    }, PRESS_DURATION);
+                }, { passive: false });
+
+                row.addEventListener('touchend', () => {
+                    clearTimeout(pressTimer);
+                    row.classList.remove('long-press-active');
+                });
+
+                row.addEventListener('touchcancel', () => {
+                    clearTimeout(pressTimer);
+                    row.classList.remove('long-press-active');
+                });
+
+                finalHeaders.forEach(header => { // Itera sobre os headers definidos
+                    const cell = document.createElement('td');
+                    let cellValue = item[header] || ''; // Garante que o valor exista
+
+                    if (header === 'data') {
+                        try {
+                            const date = new Date(cellValue);
+                            cell.dataset.originalDate = cellValue; // Armazena a data original para exclusão
+                            cellValue = date.toLocaleDateString('pt-BR', {
+                                year: 'numeric',
+                                month: '2-digit',
+                                day: '2-digit',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                            });
+                        } catch (e) {
+                            // Ignora erro de formatação
+                        }
+                    }
+
+                    cell.textContent = cellValue;
+                    if (componentes.map(c => c.id).includes(header)) { // Verifica se é um cabeçalho de componente
+                        if (cellValue && cellValue.toLowerCase().startsWith('falha')) { // Verifica se começa com 'falha'
+                            cell.classList.add('status-falha-cell');
+                        } else if (cellValue && cellValue.toLowerCase() === 'ok') {
+                            cell.classList.add('status-ok-cell');
+                        } else if (cellValue && cellValue.toLowerCase() === 'n/a') {
+                            cell.classList.add('status-na-cell');
+                        }
+                    }
+                    row.appendChild(cell);
+                });
+                tableBody.appendChild(row);
+            });
+
+            recordsStatusDiv.classList.add('success');
+            recordsStatusDiv.textContent = `Dados carregados com sucesso. Total: ${data.length} registros.`;
+
+        } catch (error) {
+            console.error('Erro ao buscar dados:', error);
+            recordsStatusDiv.classList.add('error');
+            recordsStatusDiv.textContent = 'Erro ao carregar os registros: ' + error.message;
+        } finally {
+            loadingData.classList.add('hidden');
+        }
+    }
+
+    function formatHeader(header) {
+        if (header === 'data') return 'Data/Hora';
+        if (header === 'observacao') return 'Observação Geral';
+        // Trata os IDs dos componentes para exibir nomes legíveis
+        const foundComponent = componentes.find(c => c.id === header);
+        if (foundComponent) return foundComponent.label;
+        return header.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
+    }
+
+    function showDeleteConfirmation(record) {
+        // record.data contém a data/hora exata que o Apps Script usará para exclusão
+        recordToDelete = record; 
+        deleteRecordInfo.textContent = `${record.modelo} - ${record.cliente} (${new Date(record.data).toLocaleString('pt-BR')})`;
+        confirmDeleteModal.classList.add('visible');
+    }
+
+    confirmDeleteBtn.addEventListener('click', () => {
+        if (recordToDelete) {
+            // Envia o campo 'data' do registro para o Apps Script
+            deleteRecord(recordToDelete.data); 
+            recordToDelete = null;
+        }
+        confirmDeleteModal.classList.remove('visible');
+    });
+
+    cancelDeleteBtn.addEventListener('click', () => {
+        recordToDelete = null;
+        confirmDeleteModal.classList.remove('visible');
+    });
+
+    async function deleteRecord(recordDate) {
+        recordsStatusDiv.textContent = '';
+        recordsStatusDiv.className = '';
+        loadingData.classList.remove('hidden');
+        recordsStatusDiv.textContent = 'Excluindo registro...';
+
+        try {
+            const data = {
+                action: 'delete',
+                data: recordDate // Envia a data/hora para o Apps Script como "data"
+            };
+
+            const response = await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            // Embora o 'no-cors' não permita ler a resposta,
+            // podemos assumir sucesso e re-carregar os dados.
+            recordsStatusDiv.classList.add('success');
+            recordsStatusDiv.textContent = 'Registro excluído com sucesso (atualizando tabela)...';
+            fetchDataAndDisplay();
+
+        } catch (error) {
+            console.error('Erro ao excluir registro:', error);
+            recordsStatusDiv.classList.add('error');
+            recordsStatusDiv.textContent = 'Erro ao excluir o registro: ' + error.message;
+        } finally {
+            loadingData.classList.add('hidden');
+        }
+    }
+
+    // --- Funções para o Guia de Uso ---
+    helpBtn.addEventListener('click', () => {
+        guideModal.classList.add('visible');
+    });
+
+    closeGuideBtn.addEventListener('click', () => {
+        guideModal.classList.remove('visible');
+    });
+
+    function updateHelpButtonVisibility() {
+        const isInitialScreen = clienteField.classList.contains('hidden') && 
+                              componentesField.classList.contains('hidden');
+        
+        helpBtn.style.display = isInitialScreen ? 'flex' : 'none';
+    }
+
+    // Inicialização
+    document.addEventListener('DOMContentLoaded', () => {
+        updateHelpButtonVisibility();
+    });
+</script>
+</body>
+</html>
