@@ -3,327 +3,319 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Registro de Testes</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Registro de Testes Moderno</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #007bff;
-            --primary-dark: #0056b3;
-            --background-gradient: linear-gradient(135deg, #f0f2f5, #e0e4eb);
+            --primary-color: #3B82F6; 
+            --primary-dark: #2563EB; 
+            --primary-light: #DBEAFE; 
+            --accent-color: #F59E0B;
+            
+            --background-gradient: linear-gradient(135deg, #F3F4F6, #E5E7EB);
             --card-background: #ffffff;
-            --text-color: #343a40;
-            --placeholder-color: #6c757d;
-            --border-color: #ced4da;
+            --text-color: #1F2937;
+            --text-color-light: #4B5563;
+            --placeholder-color: #9CA3AF;
+            --border-color: #D1D5DB;
             --focus-border-color: var(--primary-color);
-            --shadow-light: rgba(0, 0, 0, 0.05);
-            --shadow-medium: rgba(0, 0, 0, 0.1);
-            --success-bg: #d4edda;
-            --success-border: #28a745;
-            --success-text: #155724;
-            --failure-bg: #f8d7da;
-            --failure-border: #dc3545;
-            --failure-text: #721c24;
-            --na-bg: #e9ecef;
-            --na-border: #adb5bd;
-            --na-text: #495057;
-            --delete-bg: #fdeded;
-            --delete-border: #dc3545;
-            --delete-text: #721c24;
+            --focus-shadow-color: rgba(59, 130, 246, 0.25);
+
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+            --shadow-sm: 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 8px -2px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+            --success-bg: #D1FAE5;
+            --success-border: #10B981;
+            --success-text: #047857;
+
+            --failure-bg: #FEE2E2;
+            --failure-border: #EF4444;
+            --failure-text: #B91C1C;
+
+            --na-bg: #E5E7EB;
+            --na-border: #9CA3AF;
+            --na-text: #4B5563;
+
+            --delete-bg: var(--failure-bg);
+            --delete-border: var(--failure-border);
+            --delete-text: var(--failure-text);
+            
+            --font-family: 'Poppins', sans-serif;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Roboto', sans-serif;
+            font-family: var(--font-family);
         }
 
         body {
             background: var(--background-gradient);
-            min-height: 10vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
             color: var(--text-color);
+            transition: background 0.3s ease;
         }
 
         .app {
             background: var(--card-background);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 25px var(--shadow-medium);
+            padding: 35px 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
             width: 100%;
-            max-width: 800px;
+            max-width: 850px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
             position: relative;
+            transition: box-shadow 0.3s ease;
+        }
+        .app:hover {
+            box-shadow: var(--shadow-xl);
         }
 
         h1 {
             text-align: center;
-            font-size: 2rem;
+            font-size: 2.2rem;
             color: var(--primary-color);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             font-weight: 700;
         }
 
         .field {
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 10px;
         }
 
         label {
-            font-weight: 500;
+            font-weight: 600;
             color: var(--text-color);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
         }
 
         select,
-        input[type="text"],
-        input[type="password"] {
-            padding: 12px;
+        input[type="text"] {
+            padding: 14px 16px;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 1rem;
-            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
             color: var(--text-color);
-            background-color: var(--card-background);
-            box-shadow: inset 0 1px 2px var(--shadow-light);
+            background-color: #f8fafc; 
+            box-shadow: var(--shadow-xs);
         }
 
         select::placeholder,
-        input[type="text"]::placeholder,
-        input[type="password"]::placeholder {
+        input[type="text"]::placeholder {
             color: var(--placeholder-color);
         }
 
         select:focus,
-        input[type="text"]:focus,
-        input[type="password"]:focus {
+        input[type="text"]:focus {
             border-color: var(--focus-border-color);
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
+            box-shadow: 0 0 0 3px var(--focus-shadow-color), var(--shadow-sm);
             outline: none;
+            background-color: var(--card-background);
         }
 
         fieldset {
             border: none;
             padding: 0;
-            margin-top: 10px;
+            margin-top: 15px;
         }
 
         legend {
             font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--text-color);
-            font-size: 1rem;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+            font-size: 1.1rem;
         }
 
         .components {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
         }
 
         .component {
             background: var(--na-bg);
-            padding: 20px 15px;
+            padding: 20px;
             border-radius: 12px;
-            box-shadow: 0 4px 10px var(--shadow-light);
+            box-shadow: var(--shadow-sm);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             user-select: none;
-            transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.1s ease, border-color 0.3s ease;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
             border: 1px solid var(--na-border);
-            min-height: 90px;
+            min-height: 100px;
             text-align: center;
             position: relative;
         }
 
         .component:hover {
-            box-shadow: 0 6px 15px var(--shadow-medium);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
         }
 
         .component:active {
-            transform: scale(0.95);
+            transform: scale(0.96) translateY(-1px);
         }
 
         .component .icon {
-            font-size: 2.2rem;
-            margin-bottom: 5px;
+            font-size: 2.5rem;
+            margin-bottom: 8px;
             line-height: 1;
             transition: transform 0.3s ease, color 0.3s ease;
         }
 
         .component span {
             font-weight: 500;
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: var(--na-text);
             pointer-events: none;
             margin-bottom: 5px;
         }
 
         .component textarea {
-            width: calc(100% - 10px);
-            padding: 5px 8px;
+            width: calc(100% - 16px);
+            padding: 8px 10px;
             border: 1px solid var(--border-color);
-            border-radius: 5px;
-            font-size: 0.8rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
             resize: vertical;
-            min-height: 30px;
-            max-height: 80px;
-            box-shadow: inset 0 1px 2px var(--shadow-light);
-            margin-top: 5px;
+            min-height: 35px;
+            max-height: 90px;
+            box-shadow: var(--shadow-xs);
+            margin-top: 8px;
             color: var(--text-color);
             background-color: var(--card-background);
         }
-        .component textarea::placeholder {
-            color: var(--placeholder-color);
-        }
+        .component textarea::placeholder { color: var(--placeholder-color); }
         .component textarea:focus {
             border-color: var(--focus-border-color);
-            box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.15);
+            box-shadow: 0 0 0 2.5px var(--focus-shadow-color);
             outline: none;
         }
 
-        .status-na {
-            background-color: var(--na-bg);
-            border-color: var(--na-border);
-        }
+        .status-na { background-color: var(--na-bg); border-color: var(--na-border); }
         .status-na span { color: var(--na-text); }
         .status-na .icon { color: var(--na-text); }
 
-        .status-ok {
-            background-color: var(--success-bg);
-            border-color: var(--success-border);
-        }
+        .status-ok { background-color: var(--success-bg); border-color: var(--success-border); }
         .status-ok span { color: var(--success-text); }
-        .status-ok .icon {
-            color: var(--success-border);
-            animation: pulseGreen 0.6s ease-out;
-        }
+        .status-ok .icon { color: var(--success-border); animation: pulseGreen 0.7s cubic-bezier(0.25, 0.1, 0.25, 1); }
 
-        .status-falha {
-            background-color: var(--failure-bg);
-            border-color: var(--failure-border);
-            padding-bottom: 10px;
-            min-height: 120px;
-        }
+        .status-falha { background-color: var(--failure-bg); border-color: var(--failure-border); padding-bottom: 12px; min-height: 130px; }
         .status-falha span { color: var(--failure-text); }
-        .status-falha .icon {
-            color: var(--failure-border);
-            animation: shakeRed 0.6s ease-out;
-        }
+        .status-falha .icon { color: var(--failure-border); animation: shakeRed 0.5s cubic-bezier(.36,-0.64,.34,1.55); }
 
         @keyframes pulseGreen {
-            0% { transform: scale(0.8); opacity: 0.7; }
-            50% { transform: scale(1.1); opacity: 1; }
+            0% { transform: scale(0.9); opacity: 0.8; }
+            50% { transform: scale(1.15); opacity: 1; }
             100% { transform: scale(1); opacity: 1; }
         }
 
         @keyframes shakeRed {
             0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-5px); }
-            40%, 80% { transform: translateX(5px); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+            20%, 40%, 60%, 80% { transform: translateX(4px); }
         }
-
+        
         button[type="submit"] {
-            padding: 14px;
-            background: var(--primary-color);
+            padding: 15px 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: #fff;
             border: none;
-            border-radius: 8px;
-            font-size: 1rem;
+            border-radius: 12px;
+            font-size: 1.05rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
-            margin-top: 15px;
-            box-shadow: 0 4px 10px var(--shadow-medium);
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            margin-top: 20px;
+            box-shadow: var(--shadow-md);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         button[type="submit"]:hover:not(:disabled) {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 15px var(--shadow-medium);
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: var(--shadow-lg);
         }
 
         button[type="submit"]:disabled {
-            background-color: #cccccc;
+            background-color: #BDBDBD;
+            background-image: none;
             cursor: not-allowed;
             box-shadow: none;
             transform: none;
+            color: #757575;
         }
 
         button[type="submit"]:active:not(:disabled) {
-            transform: scale(0.98);
+            transform: translateY(-1px) scale(0.98);
+            box-shadow: var(--shadow-sm);
         }
 
-        #status {
+        #status, .records-status {
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 500;
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 8px;
+            margin-top: 15px;
+            padding: 12px 15px;
+            border-radius: 10px;
             border: 1px solid transparent;
-            transition: all 0.3s ease;
+            opacity: 0; 
+            transform: translateY(10px); 
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, 
+                        opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
         }
-        #status.success {
+        #status.active, .records-status.active { 
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #status.success, .records-status.success {
             background-color: var(--success-bg);
             color: var(--success-text);
             border-color: var(--success-border);
+            box-shadow: var(--shadow-sm);
         }
-        #status.error {
+        #status.error, .records-status.error {
             background-color: var(--failure-bg);
             color: var(--failure-text);
             border-color: var(--failure-border);
+            box-shadow: var(--shadow-sm);
+        }
+        .records-status {
+             margin-top: 10px;
         }
 
-        .hidden {
-            display: none !important;
-        }
 
-        @media (max-width: 550px) {
-            .app {
-                padding: 20px;
-                gap: 15px;
-            }
-            h1 {
-                font-size: 1.8rem;
-            }
-            .components {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-            }
-            .component {
-                min-height: 80px;
-                padding: 15px 10px;
-            }
-            .component .icon {
-                font-size: 1.8rem;
-            }
-            .component span {
-                font-size: 0.9rem;
-            }
-            button[type="submit"] {
-                font-size: 0.9rem;
-                padding: 12px;
-            }
-            label, legend {
-                font-size: 0.9rem;
-            }
-            select, input[type="text"], input[type="password"] {
-                padding: 10px;
-            }
-            .status-falha {
-                min-height: 100px;
-            }
+        .hidden { display: none !important; }
+
+        @media (max-width: 600px) {
+            .app { padding: 25px; gap: 20px; }
+            h1 { font-size: 1.9rem; }
+            .components { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .component { min-height: 90px; padding: 15px 12px; }
+            .component .icon { font-size: 2rem; }
+            .component span { font-size: 0.9rem; }
+            button[type="submit"] { font-size: 0.95rem; padding: 14px; }
+            label, legend { font-size: 0.85rem; }
+            select, input[type="text"] { padding: 12px 14px; }
+            .status-falha { min-height: 110px; }
         }
 
         .modal-overlay {
@@ -332,533 +324,285 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 0, 0, 0.6);
+            background: rgba(30, 41, 59, 0.6); 
             display: flex;
             justify-content: center;
             align-items: center;
             z-index: 1000;
             opacity: 0;
             visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
+            transition: opacity 0.35s ease, visibility 0s linear 0.35s;
         }
 
         .modal-overlay.visible {
             opacity: 1;
             visibility: visible;
+            transition: opacity 0.35s ease, visibility 0s linear 0s;
         }
 
         .modal-content {
             background: var(--card-background);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: var(--shadow-xl);
             width: 90%;
-            max-width: 500px;
-            transform: translateY(-20px);
+            max-width: 550px;
+            transform: translateY(30px) scale(0.95);
             opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
+            transition: transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.35s ease;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 25px;
         }
 
         .modal-overlay.visible .modal-content {
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
             opacity: 1;
         }
 
         .modal-content h2 {
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             color: var(--primary-color);
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             text-align: center;
+            font-weight: 600;
         }
-        .modal-content.delete h2 {
-            color: var(--failure-border);
-        }
-
-        .modal-content p {
-            font-size: 1rem;
-            line-height: 1.5;
-            text-align: center;
-            margin-bottom: 15px;
-        }
+        .modal-content.delete h2 { color: var(--failure-border); }
+        .modal-content p { font-size: 1rem; line-height: 1.6; text-align: center; color: var(--text-color-light); margin-bottom: 10px; }
 
         .modal-content textarea {
             width: 100%;
-            min-height: 100px;
-            padding: 12px;
+            min-height: 120px;
+            padding: 14px;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 1rem;
             resize: vertical;
             color: var(--text-color);
+            background-color: #f8fafc;
+            box-shadow: var(--shadow-xs);
+            margin-top: 5px;
+        }
+        .modal-content textarea::placeholder { color: var(--placeholder-color); }
+        .modal-content textarea:focus {
+             border-color: var(--focus-border-color);
+            box-shadow: 0 0 0 3px var(--focus-shadow-color);
+            outline: none;
             background-color: var(--card-background);
-            box-shadow: inset 0 1px 2px var(--shadow-light);
-            margin-top: 10px;
         }
 
-        .modal-content textarea::placeholder {
-            color: var(--placeholder-color);
-        }
-
-        .modal-actions {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 15px;
-        }
-
+        .modal-actions { display: flex; justify-content: space-around; gap: 20px; margin-top: 10px; }
         .modal-actions button {
             flex: 1;
-            padding: 12px 20px;
+            padding: 14px 22px;
             border: none;
-            border-radius: 8px;
-            font-size: 1rem;
+            border-radius: 10px;
+            font-size: 0.95rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s ease, transform 0.1s ease;
+            transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+            box-shadow: var(--shadow-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
+        .modal-actions button:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .modal-actions button:active { transform: translateY(0px); box-shadow: var(--shadow-xs); }
 
-        .modal-actions button.confirm {
-            background: var(--primary-color);
-            color: #fff;
-        }
-
-        .modal-actions button.confirm:hover {
-            background: var(--primary-dark);
-            transform: translateY(-1px);
-        }
-
-        .modal-actions button.cancel {
-            background: #6c757d;
-            color: #fff;
-        }
-
-        .modal-actions button.cancel:hover {
-            background: #5a6268;
-            transform: translateY(-1px);
-        }
-
-        .modal-actions button.delete-btn {
-            background: var(--failure-border);
-            color: #fff;
-        }
-        .modal-actions button.delete-btn:hover {
-            background: #a71d2a;
-            transform: translateY(-1px);
-        }
+        .modal-actions button.confirm { background-color: var(--primary-color); color: #fff; }
+        .modal-actions button.confirm:hover { background-color: var(--primary-dark); }
+        .modal-actions button.cancel { background-color: #B0BEC5; color: var(--text-color); }
+        .modal-actions button.cancel:hover { background-color: #90A4AE; }
+        .modal-actions button.delete-btn { background-color: var(--failure-border); color: #fff; }
+        .modal-actions button.delete-btn:hover { background-color: #D32F2F; }
 
         .data-table-container {
-            max-height: 400px;
-            overflow-y: auto;
+            /* max-height: 450px; /* MODIFIED: Removed or commented out */
+            overflow-y: auto; /* Kept for internal table scroll if needed */
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 12px;
             background-color: var(--card-background);
-            box-shadow: inset 0 1px 2px var(--shadow-light);
+            box-shadow: var(--shadow-sm);
+            margin-top: 10px;
+            flex-grow: 1; /* MODIFIED: Added */
+            min-height: 0; /* MODIFIED: Added for better flex behavior with overflow */
         }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-        }
-
-        .data-table th, .data-table td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--border-color);
-        }
-
+        .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .data-table th, .data-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid #E0E0E0; }
+        .data-table td { color: var(--text-color-light); }
         .data-table th {
-            background-color: var(--primary-color);
-            color: #fff;
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
             font-weight: 600;
             position: sticky;
             top: 0;
             z-index: 10;
+            border-bottom-width: 2px;
+            border-bottom-color: var(--primary-color);
         }
-
-        .data-table tbody tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-
-        .data-table tbody tr:hover {
-            background-color: #e2e6ea;
-        }
+        .data-table th:first-child { border-top-left-radius: 11px; }
+        .data-table th:last-child { border-top-right-radius: 11px; }
+        .data-table tbody tr:nth-child(even) { background-color: #FAFAFA; }
+        .data-table tbody tr:hover { background-color: #F5F5F5; transition: background-color 0.2s ease; }
         .data-table tbody tr.long-press-active {
             background-color: var(--delete-bg);
             border: 1px solid var(--delete-border);
-            box-shadow: 0 0 5px var(--delete-border);
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.5); 
+            color: var(--delete-text);
         }
+        .data-table tbody tr.long-press-active td { color: var(--delete-text); }
 
         .loading-message {
             text-align: center;
-            padding: 20px;
+            padding: 25px;
             font-size: 1.1rem;
-            color: var(--text-color);
+            color: var(--text-color-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .loading-message::before {
+            content: '\f110'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            animation: fa-spin 1s infinite linear; font-size: 1.3em;
         }
 
-        .view-records-btn {
+        .view-records-btn, .help-btn {
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             color: white;
             border: none;
             border-radius: 50%;
             width: 60px;
             height: 60px;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: var(--shadow-lg);
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
             z-index: 999;
         }
+        .view-records-btn { bottom: 30px; right: 30px; }
+        .help-btn { bottom: 30px; left: 30px; }
 
-        .view-records-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        .view-records-btn:hover, .help-btn:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: var(--shadow-xl);
+        }
+        .view-records-btn:active, .help-btn:active {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: var(--shadow-md);
         }
 
-        .view-records-btn:active {
-            transform: scale(0.95);
-        }
-
-        .records-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1001;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .records-modal.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .records-content {
-            background: var(--card-background);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            width: 90%;
-            max-width: 900px;
+        .records-modal { z-index: 1001; }
+        .records-content { /* Uses .modal-content structure */
+            max-width: 950px; 
             max-height: 90vh;
-            transform: translateY(-20px);
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            overflow-y: auto; /* MODIFIED: Added for explicitness, modal will scroll if content overflows */
         }
+        .records-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .records-header h2 { color: var(--primary-color); font-size: 1.9rem; margin: 0; font-weight: 600; }
+        .close-records-btn, .close-guide-btn {
+            background: transparent; border: none; font-size: 2rem; cursor: pointer;
+            color: var(--text-color-light); transition: color 0.25s ease, transform 0.2s ease;
+            padding: 5px; line-height: 1;
+        }
+        .close-records-btn:hover, .close-guide-btn:hover { color: var(--primary-dark); transform: rotate(90deg); }
+        
+        #confirmDeleteModal { z-index: 1002; }
 
-        .records-modal.visible .records-content {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        .records-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .records-header h2 {
-            color: var(--primary-color);
-            font-size: 1.8rem;
-            margin: 0;
-        }
-
-        .close-records-btn {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-color);
-            transition: color 0.2s ease;
-        }
-
-        .close-records-btn:hover {
-            color: var(--primary-dark);
-        }
-
-        .records-status {
-            text-align: center;
-            font-size: 0.9rem;
-            font-weight: 500;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid transparent;
-            transition: all 0.3s ease;
-        }
-        .records-status.success {
-            background-color: var(--success-bg);
-            color: var(--success-text);
-            border-color: var(--success-border);
-        }
-        .records-status.error {
-            background-color: var(--failure-bg);
-            color: var(--failure-text);
-            border-color: var(--failure-border);
-        }
-
-        #confirmDeleteModal {
-            z-index: 1002;
-        }
-
-        .help-btn {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: all 0.3s ease;
-            z-index: 999;
-        }
-
-        .help-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .help-btn:active {
-            transform: scale(0.95);
-        }
-
-        .guide-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1003;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-        }
-
-        .guide-modal.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .guide-content {
-            background: var(--card-background);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            width: 90%;
-            max-width: 700px;
-            max-height: 80vh;
-            overflow-y: auto;
-            transform: translateY(-20px);
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-
-        .guide-modal.visible .guide-content {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
+        .guide-modal { z-index: 1003; }
+        .guide-content { max-width: 750px; max-height: 85vh; overflow-y: auto; }
         .guide-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color);
         }
+        .guide-header h2 { color: var(--primary-color); font-size: 1.9rem; margin: 0; font-weight: 600; }
+        .guide-section { margin-bottom: 25px; }
+        .guide-section h3 { color: var(--primary-dark); margin-bottom: 12px; font-size: 1.35rem; font-weight: 600; }
+        .guide-section p, .guide-section li { margin-bottom: 10px; line-height: 1.7; color: var(--text-color-light); font-size: 0.95rem; }
+        .guide-section ul { padding-left: 25px; margin-bottom: 12px; }
+        .guide-section strong { color: var(--text-color); font-weight: 500; }
+        .guide-section i.fas { color: var(--primary-color); margin: 0 2px;}
 
-        .guide-header h2 {
-            color: var(--primary-color);
-            font-size: 1.8rem;
-            margin: 0;
-        }
 
-        .close-guide-btn {
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--text-color);
-            transition: color 0.2s ease;
-        }
-
-        .close-guide-btn:hover {
-            color: var(--primary-dark);
-        }
-
-        .guide-section {
-            margin-bottom: 20px;
-        }
-
-        .guide-section h3 {
-            color: var(--primary-color);
-            margin-bottom: 10px;
-            font-size: 1.3rem;
-        }
-
-        .guide-section p {
-            margin-bottom: 10px;
-            line-height: 1.5;
-        }
-
-        .guide-section ul {
-            padding-left: 20px;
-            margin-bottom: 10px;
-        }
-
-        .guide-section li {
-            margin-bottom: 8px;
-            line-height: 1.4;
-        }
-
-        /* Tela de login */
         .login-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--background-gradient);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 2000;
-            padding: 20px;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--background-gradient); display: flex; justify-content: center;
+            align-items: center; z-index: 2000; padding: 20px;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
         }
+        .login-screen.hidden-auth { opacity: 0; visibility: hidden; }
 
         .login-container {
-            background: var(--card-background);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            width: 100%;
-            max-width: 450px;
-            text-align: center;
-            transform: translateY(-20px);
-            opacity: 0;
-            animation: fadeInUp 0.5s ease-out forwards;
+            background: var(--card-background); padding: 45px; border-radius: 24px;
+            box-shadow: var(--shadow-xl); width: 100%; max-width: 480px; text-align: center;
+            transform: translateY(-20px) scale(0.98); opacity: 0;
+            animation: fadeInUpLogin 0.6s 0.2s ease-out forwards;
         }
 
-        @keyframes fadeInUp {
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
+        @keyframes fadeInUpLogin {
+            to { transform: translateY(0) scale(1); opacity: 1; }
         }
 
-        .login-container h1 {
-            margin-bottom: 25px;
-            color: var(--primary-color);
-            font-size: 1.8rem;
+        .login-container h1 { margin-bottom: 30px; color: var(--primary-color); font-size: 2rem; font-weight: 700; }
+        
+        .login-container input[type="text"] {
+            width: 100%; padding: 16px 18px; border: 1px solid var(--border-color);
+            border-radius: 12px; font-size: 1.05rem; margin-bottom: 30px;
+            transition: all 0.3s ease; text-align: center; background-color: #f8fafc;
+            box-shadow: var(--shadow-xs);
         }
-
-        .login-container input {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid var(--border-color);
-            border-radius: 10px;
-            font-size: 1rem;
-            margin-bottom: 25px;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-
-        .login-container input:focus {
+        .login-container input[type="text"]:focus {
             border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.25);
-            outline: none;
+            box-shadow: 0 0 0 3.5px var(--focus-shadow-color), var(--shadow-sm);
+            outline: none; background-color: var(--card-background);
         }
-
         .login-container button {
-            width: 100%;
-            padding: 15px;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+            width: 100%; padding: 16px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white; border: none; border-radius: 12px; font-size: 1.1rem;
+            font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: var(--shadow-md); text-transform: uppercase; letter-spacing: 0.8px;
         }
-
         .login-container button:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0, 123, 255, 0.4);
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            transform: translateY(-3px) scale(1.02); box-shadow: var(--shadow-lg);
         }
-
-        .login-container button:active {
-            transform: translateY(0);
-        }
+        .login-container button:active { transform: translateY(-1px) scale(0.99); box-shadow: var(--shadow-sm); }
+        .login-container button i { margin-right: 10px; }
 
         .tester-name-display {
-            position: fixed;
-            top: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--primary-color);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            z-index: 100;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            position: fixed; top: 15px; left: 50%; transform: translateX(-50%);
+            background: var(--primary-color); color: white; padding: 10px 25px;
+            border-radius: 30px; font-size: 0.95rem; font-weight: 500;
+            box-shadow: var(--shadow-md); z-index: 100; display: flex;
+            align-items: center; gap: 10px; transition: transform 0.3s ease, opacity 0.3s ease;
         }
+        .tester-name-display:hover { transform: translateX(-50%) translateY(-2px); }
 
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-5px); }
-            40%, 80% { transform: translateX(5px); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
+            20%, 40%, 60%, 80% { transform: translateX(6px); }
         }
+        
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a1a1a1; }
+
     </style>
 </head>
 <body>
 
 <div class="login-screen" id="loginScreen">
     <div class="login-container">
-        <h1>Identificação do Testador</h1>
+        <h1><i class="fas fa-user-check" style="margin-right: 10px;"></i>Identificação</h1>
         <div class="field">
             <input type="text" id="testerName" placeholder="Digite seu nome" required autofocus />
-        </div>
-        <div class="field">
-            <input type="password" id="passwordInput" placeholder="Digite a senha" required />
         </div>
         <button type="button" id="loginBtn">
             <i class="fas fa-sign-in-alt"></i> Iniciar Testes
@@ -868,15 +612,14 @@
 
 <div class="app" id="mainApp" style="display: none;">
     <div class="tester-name-display" id="testerNameDisplay">
-        <i class="fas fa-user"></i>
-        <span id="testerNameText"></span>
+        <i class="fas fa-user-circle"></i> <span id="testerNameText"></span>
     </div>
     
-    <h1>Registro de Testes</h1>
+    <h1><i class="fas fa-clipboard-list" style="margin-right:10px;"></i>Registro de Testes</h1>
 
     <form id="dataForm">
         <div class="field">
-            <label for="modelo">Modelo</label>
+            <label for="modelo">Modelo do Dispositivo</label>
             <select id="modelo" name="modelo" required>
                 <option value="" disabled selected>Selecione o modelo</option>
                 <option value="HF801">HF801</option>
@@ -888,77 +631,64 @@
         </div>
 
         <div class="field hidden" id="clienteField">
-            <label for="cliente">Cliente</label>
-            <input type="text" id="cliente" name="cliente" placeholder="Nome do cliente" required />
+            <label for="cliente">Nome do Cliente</label>
+            <input type="text" id="cliente" name="cliente" placeholder="Ex: João Silva" required />
         </div>
 
         <fieldset class="hidden" id="componentesField">
-            <legend>Componentes</legend>
+            <legend>Status dos Componentes</legend>
             <div class="components" id="components"></div>
         </fieldset>
 
-        <button type="submit" class="hidden" id="enviarBtn">Enviar Teste</button>
+        <button type="submit" class="hidden" id="enviarBtn"><i class="fas fa-paper-plane" style="margin-right: 8px;"></i>Enviar Teste</button>
     </form>
     <div id="status" aria-live="polite"></div>
 </div>
 
-<button class="help-btn" id="helpBtn" title="Ajuda">
-    <i class="fas fa-question"></i>
-</button>
+<button class="help-btn" id="helpBtn" title="Ajuda e Guia de Uso"> <i class="fas fa-question-circle"></i> </button>
+<button class="view-records-btn" id="viewRecordsBtn" title="Visualizar Registros de Testes"> <i class="fas fa-history"></i> </button>
 
-<button class="view-records-btn" id="viewRecordsBtn" title="Ver Registros">
-    <i class="fas fa-list"></i>
-</button>
-
-<div class="guide-modal" id="guideModal">
-    <div class="guide-content">
-        <div class="guide-header">
-            <h2>Guia de Uso</h2>
-            <button class="close-guide-btn" id="closeGuideBtn">&times;</button>
+<div class="guide-modal modal-overlay" id="guideModal"> <div class="guide-content modal-content"> <div class="guide-header">
+            <h2><i class="fas fa-book-open" style="margin-right:10px;"></i>Guia de Uso</h2>
+            <button class="close-guide-btn" id="closeGuideBtn" title="Fechar Guia">&times;</button>
         </div>
-        
         <div class="guide-section">
-            <h3>Como registrar um teste</h3>
+            <h3><i class="fas fa-tasks" style="margin-right:8px;"></i>Como registrar um teste</h3>
             <ol>
-                <li>Selecione o modelo do dispositivo</li>
-                <li>Informe o nome do cliente</li>
+                <li>Selecione o <strong>modelo</strong> do dispositivo no menu suspenso.</li>
+                <li>Informe o <strong>nome do cliente</strong> no campo correspondente.</li>
                 <li>Clique em cada componente para alterar seu status:
                     <ul>
-                        <li><strong>N/A</strong>: Não aplicável</li>
-                        <li><strong>OK</strong>: Componente funcionando</li>
-                        <li><strong>FALHA</strong>: Componente com problema (se for falha, você pode adicionar uma observação)</li>
+                        <li><i class="fas fa-minus-circle" style="color:var(--na-text)"></i> <strong>N/A</strong> (Não Aplicável): O componente não se aplica ao modelo ou não foi testado.</li>
+                        <li><i class="fas fa-check-circle" style="color:var(--success-border)"></i> <strong>OK</strong>: O componente está funcionando corretamente.</li>
+                        <li><i class="fas fa-times-circle" style="color:var(--failure-border)"></i> <strong>FALHA</strong>: O componente apresenta problemas. Se marcar como falha, um campo para <strong>observações</strong> sobre o defeito aparecerá.</li>
                     </ul>
                 </li>
-                <li>Clique em "Enviar Teste" para salvar</li>
+                <li>Após verificar todos os componentes, clique em "Enviar Teste".</li>
+                <li>Uma janela de confirmação surgirá. O foco estará no botão "Confirmar". Você pode adicionar uma <strong>observação geral</strong> para o teste (opcional) e então confirmar o envio.</li>
             </ol>
         </div>
-
         <div class="guide-section">
-            <h3>Como visualizar registros</h3>
-            <p>Clique no botão <i class="fas fa-list"></i> no canto inferior direito para ver todos os testes registrados.</p>
+            <h3><i class="fas fa-eye" style="margin-right:8px;"></i>Como visualizar registros</h3>
+            <p>Clique no botão <i class="fas fa-history"></i> flutuante no canto inferior direito da tela para abrir a lista. Serão exibidos os <strong>5 testes mais recentes</strong>. A coluna "Testador" foi removida.</p>
         </div>
-
         <div class="guide-section">
-            <h3>Como excluir um registro</h3>
-            <p>Na tela de visualização de registros, mantenha pressionado um registro por 5 segundos para abrir a opção de exclusão.</p>
+            <h3><i class="fas fa-trash-alt" style="margin-right:8px;"></i>Como excluir um registro</h3>
+            <p>Na tela de visualização de registros, <strong>mantenha pressionado</strong> (clique longo) um registro por aproximadamente <strong>3 segundos</strong>. Uma confirmação para exclusão aparecerá.</p>
         </div>
-
         <div class="guide-section">
-            <h3>Dúvidas frequentes</h3>
-            <p><strong>Q:</strong> Posso editar um teste depois de enviado?<br>
-            <strong>A:</strong> Não, após enviado o teste não pode ser editado. Caso necessário, você deve excluir o registro incorreto e criar um novo.</p>
-            
-            <p><strong>Q:</strong> O que significa N/A em um componente?<br>
-            <strong>A:</strong> Significa que aquele componente não está presente no modelo testado ou não foi verificado.</p>
+            <h3><i class="fas fa-info-circle" style="margin-right:8px;"></i>Dúvidas Frequentes</h3>
+            <p><strong>P:</strong> Posso editar um teste depois de enviado?<br>
+            <strong>R:</strong> Não. Uma vez enviado, o registro do teste não pode ser editado. Se houver um erro, você precisará excluir o registro incorreto e criar um novo.</p>
+            <p><strong>P:</strong> O que significa "N/A" em um componente?<br>
+            <strong>R:</strong> Significa que o componente não está presente no modelo específico que está sendo testado, ou que, por algum motivo, sua verificação não foi aplicável ou realizada.</p>
         </div>
     </div>
 </div>
 
-<div class="records-modal" id="recordsModal">
-    <div class="records-content">
-        <div class="records-header">
-            <h2>Registros de Testes</h2>
-            <button class="close-records-btn" id="closeRecordsBtn">&times;</button>
+<div class="records-modal modal-overlay" id="recordsModal"> <div class="records-content modal-content"> <div class="records-header">
+            <h2><i class="fas fa-archive" style="margin-right:10px;"></i>Registros de Testes</h2>
+            <button class="close-records-btn" id="closeRecordsBtn" title="Fechar Registros">&times;</button>
         </div>
         <div class="loading-message" id="loadingData">Carregando dados...</div>
         <div class="data-table-container">
@@ -968,97 +698,72 @@
                         <th>Data/Hora</th>
                         <th>Modelo</th>
                         <th>Cliente</th>
-                    </tr>
+                        </tr>
                 </thead>
                 <tbody id="tableBody">
                 </tbody>
             </table>
         </div>
-        <div id="recordsStatus" class="records-status"></div>
+        <div id="recordsStatus" class="records-status" aria-live="polite"></div>
     </div>
 </div>
 
 <div class="modal-overlay" id="confirmSendModal">
     <div class="modal-content">
-        <h2>Confirmar Envio?</h2>
-        <p>Você tem certeza que deseja enviar este registro de teste?</p>
+        <h2><i class="fas fa-question-circle" style="color: var(--primary-color); margin-right: 8px;"></i>Confirmar Envio?</h2>
+        <p>Revise os dados se necessário. Deseja prosseguir e enviar este registro de teste?</p>
         <div class="field">
             <label for="observacao">Observação Geral (opcional)</label>
             <textarea id="observacao" placeholder="Adicione qualquer observação relevante para o teste geral aqui..."></textarea>
         </div>
         <div class="modal-actions">
-            <button type="button" class="cancel" id="cancelSend">Cancelar</button>
-            <button type="button" class="confirm" id="confirmSend">Confirmar e Enviar</button>
+            <button type="button" class="cancel" id="cancelSend"><i class="fas fa-times" style="margin-right: 6px;"></i>Cancelar</button>
+            <button type="button" class="confirm" id="confirmSend"><i class="fas fa-check" style="margin-right: 6px;"></i>Confirmar</button>
         </div>
     </div>
 </div>
 
 <div class="modal-overlay" id="confirmDeleteModal">
     <div class="modal-content delete">
-        <h2>Apagar Registro?</h2>
-        <p>Você tem certeza que deseja apagar este registro?</p>
+        <h2><i class="fas fa-exclamation-triangle" style="color: var(--failure-border); margin-right: 8px;"></i>Apagar Registro?</h2>
+        <p>Esta ação é irreversível. Tem certeza que deseja apagar permanentemente este registro?</p>
         <p>Registro: <strong id="deleteRecordInfo"></strong></p>
         <div class="modal-actions">
-            <button type="button" class="cancel" id="cancelDelete">Cancelar</button>
-            <button type="button" class="delete-btn" id="confirmDelete">Sim, Apagar</button>
+            <button type="button" class="cancel" id="cancelDelete"><i class="fas fa-times" style="margin-right: 6px;"></i>Cancelar</button>
+            <button type="button" class="delete-btn" id="confirmDelete"><i class="fas fa-trash-alt" style="margin-right: 6px;"></i>Sim, Apagar</button>
         </div>
     </div>
 </div>
 
 <script>
     const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz45HNgoIKhQCwRuXtCCqtjvCNf885rBifbQFg8dAt5qSR9vdAZNmdO8l3iRPtaLLrlfw/exec';
-    const CORRECT_PASSWORD = 'HW'; // Senha para abrir o aplicativo
 
     const componentes = [
-        { id: 'aht10', label: 'AHT10' },
-        { id: 'botao_esquerdo', label: 'Botão Esquerdo' },
-        { id: 'botao_central', label: 'Botão Central' },
-        { id: 'botao_direito', label: 'Botão Direito' },
-        { id: 'botao_reset', label: 'Botão Reset' },
-        { id: 'certificado', label: 'Certificado' },
-        { id: 'conector_mola', label: 'Conector Mola' },
-        { id: 'esp32', label: 'ESP32' },
-        { id: 'display', label: 'Display' },
-        { id: 'led_azul', label: 'LED Azul' },
-        { id: 'ledrgb', label: 'LED RGB' },
-        { id: 'ldr', label: 'LDR' },
-        { id: 'ntc', label: 'NTC' },
-        { id: 'relay', label: 'Relay' },
-        { id: 'tm1637', label: 'TM1637' },
-        { id: 'watchdog', label: 'Watchdog' }
+        { id: 'aht10', label: 'AHT10' }, { id: 'botao_esquerdo', label: 'Botão Esquerdo' },
+        { id: 'botao_central', label: 'Botão Central' }, { id: 'botao_direito', label: 'Botão Direito' },
+        { id: 'botao_reset', label: 'Botão Reset' }, { id: 'certificado', label: 'Certificado' },
+        { id: 'conector_mola', label: 'Conector Mola' }, { id: 'esp32', label: 'ESP32' },
+        { id: 'display', label: 'Display' }, { id: 'led_azul', label: 'LED Azul' },
+        { id: 'ledrgb', label: 'LED RGB' }, { id: 'ldr', label: 'LDR' },
+        { id: 'ntc', label: 'NTC' }, { id: 'relay', label: 'Relay' },
+        { id: 'tm1637', label: 'TM1637' }, { id: 'watchdog', label: 'Watchdog' }
     ];
 
-    const STATUS_NA = 'N/A';
-    const STATUS_OK = 'OK';
-    const STATUS_FALHA = 'FALHA';
-
+    const STATUS_NA = 'N/A'; const STATUS_OK = 'OK'; const STATUS_FALHA = 'FALHA';
     const statusIcons = {
-        [STATUS_NA]: 'fas fa-question',
-        [STATUS_OK]: 'fas fa-check-circle',
-        [STATUS_FALHA]: 'fas fa-exclamation-triangle'
+        [STATUS_NA]: 'fas fa-minus-circle', [STATUS_OK]: 'fas fa-check-circle', [STATUS_FALHA]: 'fas fa-times-circle'
     };
-
     const statusCycle = [STATUS_NA, STATUS_OK, STATUS_FALHA];
+    const hideMap = { 'HF801': ['aht10'], 'HF810': ['aht10'], 'HF900': ['aht10'], 'HF405': ['aht10', 'ntc'], 'HF918': ['ntc'] };
 
-    const hideMap = {
-        'HF801': ['aht10'],
-        'HF810': ['aht10'],
-        'HF900': ['aht10'],
-        'HF405': ['aht10', 'ntc'],
-        'HF918': ['ntc']
-    };
-
-    // Elementos da tela de login
     const loginScreen = document.getElementById('loginScreen');
     const testerNameInput = document.getElementById('testerName');
-    const passwordInput = document.getElementById('passwordInput'); // Novo elemento de senha
     const loginBtn = document.getElementById('loginBtn');
     const mainApp = document.getElementById('mainApp');
     const testerNameDisplay = document.getElementById('testerNameDisplay');
     const testerNameText = document.getElementById('testerNameText');
     let testerName = '';
 
-    // Elementos do formulário
     const modeloSelect = document.getElementById('modelo');
     const clienteInput = document.getElementById('cliente');
     const clienteField = document.getElementById('clienteField');
@@ -1068,20 +773,17 @@
     const form = document.getElementById('dataForm');
     const statusDiv = document.getElementById('status');
 
-    // Elementos do Modal de Envio
     const confirmSendModal = document.getElementById('confirmSendModal');
     const observacaoTextarea = document.getElementById('observacao');
     const confirmSendBtn = document.getElementById('confirmSend');
     const cancelSendBtn = document.getElementById('cancelSend');
 
-    // Elementos do Modal de Exclusão
     const confirmDeleteModal = document.getElementById('confirmDeleteModal');
     const deleteRecordInfo = document.getElementById('deleteRecordInfo');
     const confirmDeleteBtn = document.getElementById('confirmDelete');
     const cancelDeleteBtn = document.getElementById('cancelDelete');
     let recordToDelete = null;
 
-    // Elementos do Modal de Visualização de Registros
     const viewRecordsBtn = document.getElementById('viewRecordsBtn');
     const recordsModal = document.getElementById('recordsModal');
     const closeRecordsBtn = document.getElementById('closeRecordsBtn');
@@ -1089,7 +791,6 @@
     const loadingData = document.getElementById('loadingData');
     const recordsStatusDiv = document.getElementById('recordsStatus');
 
-    // Elementos do Guia de Uso
     const helpBtn = document.getElementById('helpBtn');
     const guideModal = document.getElementById('guideModal');
     const closeGuideBtn = document.getElementById('closeGuideBtn');
@@ -1097,144 +798,122 @@
     let estadoComponentes = {};
     enviarBtn.dataset.originalHtml = enviarBtn.innerHTML;
 
-    // --- Funções para login ---
+    function showStatusMessage(element, message, type = 'success') {
+        element.textContent = message;
+        element.className = records-status active ${type}; 
+        if (element.id === 'status') {
+            element.className = active ${type}; 
+        }
+    }
+
+    function clearStatusMessage(element) {
+        element.textContent = '';
+        element.className = (element.id === 'status') ? '' : 'records-status';
+    }
+
+
     loginBtn.addEventListener('click', () => {
         const name = testerNameInput.value.trim();
-        const password = passwordInput.value.trim();
-        let hasError = false;
-
         testerNameInput.style.borderColor = 'var(--border-color)';
         testerNameInput.style.animation = '';
-        passwordInput.style.borderColor = 'var(--border-color)';
-        passwordInput.style.animation = '';
-
         if (name === '') {
             testerNameInput.focus();
             testerNameInput.style.borderColor = 'var(--failure-border)';
             testerNameInput.style.animation = 'shake 0.5s';
-            hasError = true;
-        }
-
-        if (password !== CORRECT_PASSWORD) {
-            passwordInput.focus();
-            passwordInput.style.borderColor = 'var(--failure-border)';
-            passwordInput.style.animation = 'shake 0.5s';
-            hasError = true;
-        }
-
-        if (hasError) {
             return;
         }
-        
         testerName = name;
         testerNameText.textContent = testerName;
-        loginScreen.style.display = 'none';
-        mainApp.style.display = 'block';
+        loginScreen.classList.add('hidden-auth');
+        mainApp.style.display = 'flex';
+        setTimeout(() => { loginScreen.style.display = 'none'; }, 500);
+        modeloSelect.focus();
     });
+    testerNameInput.addEventListener('keypress', (event) => { if (event.key === "Enter") { event.preventDefault(); loginBtn.click(); } });
 
-    // --- Funções para o formulário ---
     modeloSelect.addEventListener('change', () => {
         const modelo = modeloSelect.value;
         clienteInput.value = '';
-        clienteField.classList.remove('hidden');
-        componentesField.classList.remove('hidden');
-        enviarBtn.classList.remove('hidden');
-        statusDiv.textContent = '';
-        statusDiv.className = '';
+        if (modelo) {
+            clienteField.classList.remove('hidden');
+            componentesField.classList.remove('hidden');
+            enviarBtn.classList.remove('hidden');
+            clienteInput.focus();
+        } else {
+            clienteField.classList.add('hidden');
+            componentesField.classList.add('hidden');
+            enviarBtn.classList.add('hidden');
+        }
+        clearStatusMessage(statusDiv);
         generarComponentes(modelo);
-        updateHelpButtonVisibility();
     });
 
     function generarComponentes(modelo) {
         componentsDiv.innerHTML = '';
         estadoComponentes = {};
-
+        if (!modelo) return;
         let effectiveHideList = [...(hideMap[modelo] || [])];
         const botaoCentralId = 'botao_central';
-
         if (modelo === 'HF918') {
             const index = effectiveHideList.indexOf(botaoCentralId);
-            if (index > -1) {
-                effectiveHideList.splice(index, 1);
-            }
+            if (index > -1) { effectiveHideList.splice(index, 1); }
         } else {
-            if (!effectiveHideList.includes(botaoCentralId)) {
-                effectiveHideList.push(botaoCentralId);
-            }
+            if (!effectiveHideList.includes(botaoCentralId)) { effectiveHideList.push(botaoCentralId); }
         }
-
         componentes.forEach(comp => {
             if (!effectiveHideList.includes(comp.id)) {
                 estadoComponentes[comp.id] = { status: STATUS_NA, obs: '' };
-
                 const div = document.createElement('div');
-                div.classList.add('component', 'status-na');
+                div.className = 'component status-na';
                 div.dataset.componentId = comp.id;
-
+                div.setAttribute('tabindex', '0');
                 const icon = document.createElement('i');
-                icon.classList.add('icon', ...statusIcons[STATUS_NA].split(' '));
-
+                icon.className = icon ${statusIcons[STATUS_NA]};
                 const nome = document.createElement('span');
                 nome.textContent = comp.label;
-
                 const obsTextarea = document.createElement('textarea');
-                obsTextarea.classList.add('component-obs', 'hidden');
+                obsTextarea.className = 'component-obs hidden';
                 obsTextarea.placeholder = 'Detalhe a falha aqui...';
+                obsTextarea.setAttribute('aria-label', Observação para ${comp.label});
                 obsTextarea.addEventListener('click', (e) => e.stopPropagation());
-                obsTextarea.addEventListener('input', (e) => {
-                    estadoComponentes[comp.id].obs = e.target.value;
-                });
-
-                div.appendChild(icon);
-                div.appendChild(nome);
-                div.appendChild(obsTextarea);
+                obsTextarea.addEventListener('input', (e) => { estadoComponentes[comp.id].obs = e.target.value; });
+                div.append(icon, nome, obsTextarea);
                 componentsDiv.appendChild(div);
-
-                div.addEventListener('click', () => {
-                    let currentStatus = estadoComponentes[comp.id].status;
-                    let currentIndex = statusCycle.indexOf(currentStatus);
-                    let nextIndex = (currentIndex + 1) % statusCycle.length;
-                    let newStatus = statusCycle[nextIndex];
-
-                    estadoComponentes[comp.id].status = newStatus;
-
+                const changeStatus = () => {
+                    let cs = estadoComponentes[comp.id].status;
+                    let ni = (statusCycle.indexOf(cs) + 1) % statusCycle.length;
+                    let ns = statusCycle[ni];
+                    estadoComponentes[comp.id].status = ns;
                     div.classList.remove('status-na', 'status-ok', 'status-falha');
-                    let statusClassSuffix = newStatus.toLowerCase();
-                    if (newStatus === STATUS_NA) {
-                        statusClassSuffix = 'na';
-                    }
-                    div.classList.add(`status-${statusClassSuffix}`);
-
-                    icon.className = 'icon';
-                    icon.classList.add(...statusIcons[newStatus].split(' '));
-
-                    if (newStatus === STATUS_FALHA) {
-                        obsTextarea.classList.remove('hidden');
-                        obsTextarea.focus();
+                    div.classList.add(status-${ns === STATUS_NA ? 'na' : ns.toLowerCase()});
+                    icon.className = icon ${statusIcons[ns]};
+                    if (ns === STATUS_FALHA) {
+                        obsTextarea.classList.remove('hidden'); obsTextarea.focus();
                     } else {
                         obsTextarea.classList.add('hidden');
-                        obsTextarea.value = '';
-                        estadoComponentes[comp.id].obs = '';
+                        if(estadoComponentes[comp.id].status !== STATUS_FALHA) {
+                            obsTextarea.value = ''; estadoComponentes[comp.id].obs = '';
+                        }
                     }
-                });
-            } else {
-                estadoComponentes[comp.id] = { status: STATUS_NA, obs: '' };
-            }
+                };
+                div.addEventListener('click', changeStatus);
+                div.addEventListener('keypress', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); changeStatus(); } });
+            } else { estadoComponentes[comp.id] = { status: STATUS_NA, obs: '' }; }
         });
     }
 
     form.addEventListener('submit', e => {
         e.preventDefault();
-        statusDiv.textContent = '';
-        statusDiv.className = '';
-        enviarBtn.disabled = true;
+        if (!modeloSelect.value) { showStatusMessage(statusDiv, 'Por favor, selecione um modelo.', 'error'); modeloSelect.focus(); return; }
+        if (!clienteInput.value.trim()) { showStatusMessage(statusDiv, 'Por favor, informe o nome do cliente.', 'error'); clienteInput.focus(); return; }
+        clearStatusMessage(statusDiv);
         confirmSendModal.classList.add('visible');
-        observacaoTextarea.focus();
+        confirmSendBtn.focus(); // MODIFIED: Focus on confirm button
     });
 
     confirmSendBtn.addEventListener('click', () => {
         confirmSendModal.classList.remove('visible');
-        enviarBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+        enviarBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i>Enviando...';
         enviarBtn.disabled = true;
         enviarDados();
     });
@@ -1247,168 +926,97 @@
     });
 
     function enviarDados() {
-        const data = {
-            action: 'create',
-            data: new Date().toISOString(),
-            modelo: form.modelo.value,
-            cliente: form.cliente.value,
-            nome_tester: testerName,
-            observacao: observacaoTextarea.value
-        };
-
-        for (let comp of componentes) {
+        const dataPayload = { action: 'create', data: new Date().toISOString(), modelo: form.modelo.value, cliente: form.cliente.value, nome_tester: testerName, observacao: observacaoTextarea.value.trim() };
+        componentes.forEach(comp => {
             const compState = estadoComponentes[comp.id];
             if (compState) {
-                data[comp.id] = compState.status;
-                if (compState.status === STATUS_FALHA && compState.obs.trim() !== '') {
-                    data[comp.id] += ` (${compState.obs.trim()})`;
-                }
-            } else {
-                data[comp.id] = STATUS_NA;
-            }
-        }
-
-        fetch(SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        }).then(() => {
-            statusDiv.classList.add('success');
-            statusDiv.textContent = 'Dados enviados com sucesso!';
-
-            form.reset();
-            clienteInput.value = '';
-            componentsDiv.innerHTML = '';
-            clienteField.classList.add('hidden');
-            componentesField.classList.add('hidden');
-            enviarBtn.classList.add('hidden');
-            estadoComponentes = {};
-            observacaoTextarea.value = '';
-            updateHelpButtonVisibility();
+                dataPayload[comp.id] = compState.status;
+                if (compState.status === STATUS_FALHA && compState.obs.trim() !== '') { dataPayload[comp.id] += ` (${compState.obs.trim()})`; }
+            } else { dataPayload[comp.id] = STATUS_NA; }
+        });
+        fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dataPayload) })
+        .then(() => {
+            showStatusMessage(statusDiv, 'Dados enviados com sucesso! (Confirmação pendente do servidor)', 'success');
+            form.reset(); componentsDiv.innerHTML = '';
+            clienteField.classList.add('hidden'); componentesField.classList.add('hidden');
+            enviarBtn.classList.add('hidden'); estadoComponentes = {};
+            observacaoTextarea.value = ''; modeloSelect.value = "";
         }).catch(err => {
-            statusDiv.classList.add('error');
-            statusDiv.textContent = 'Erro ao enviar os dados: ' + err.message;
+            showStatusMessage(statusDiv, 'Erro ao tentar enviar os dados: ' + err.message, 'error');
         }).finally(() => {
-            enviarBtn.disabled = false;
-            enviarBtn.innerHTML = enviarBtn.dataset.originalHtml;
+            enviarBtn.disabled = false; enviarBtn.innerHTML = enviarBtn.dataset.originalHtml;
         });
     }
 
-    // --- Funções para Visualização de Dados e Exclusão ---
-    viewRecordsBtn.addEventListener('click', () => {
-        recordsModal.classList.add('visible');
-        fetchDataAndDisplay();
-    });
-
-    closeRecordsBtn.addEventListener('click', () => {
-        recordsModal.classList.remove('visible');
+    viewRecordsBtn.addEventListener('click', () => { recordsModal.classList.add('visible'); fetchDataAndDisplay(); });
+    closeRecordsBtn.addEventListener('click', () => { recordsModal.classList.remove('visible'); });
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            if (recordsModal.classList.contains('visible')) recordsModal.classList.remove('visible');
+            if (guideModal.classList.contains('visible')) guideModal.classList.remove('visible');
+            if (confirmSendModal.classList.contains('visible')) {
+                confirmSendModal.classList.remove('visible');
+                if (!enviarBtn.disabled) enviarBtn.innerHTML = enviarBtn.dataset.originalHtml;
+            }
+            if (confirmDeleteModal.classList.contains('visible')) confirmDeleteModal.classList.remove('visible');
+        }
     });
 
     async function fetchDataAndDisplay() {
         loadingData.classList.remove('hidden');
-        recordsStatusDiv.textContent = '';
-        recordsStatusDiv.className = ''; // Limpa classes de status anteriores
+        clearStatusMessage(recordsStatusDiv);
         tableBody.innerHTML = '';
-
         try {
-            const response = await fetch(SCRIPT_URL, { method: 'GET' });
-            if (!response.ok) {
-                throw new Error(`Erro HTTP: ${response.status}`);
-            }
+            const response = await fetch(${SCRIPT_URL}?v=${new Date().getTime()}, { method: 'GET' });
+            if (!response.ok) throw new Error(Erro HTTP: ${response.status} ${response.statusText});
             const data = await response.json();
-
-            if (data.length === 0) {
-                recordsStatusDiv.classList.remove('success', 'error');
-                recordsStatusDiv.textContent = 'Nenhum registro encontrado.';
+            
+            const totalRecords = data.length;
+            if (totalRecords === 0) {
+                showStatusMessage(recordsStatusDiv, 'Nenhum registro encontrado.', 'success'); 
                 loadingData.classList.add('hidden');
                 return;
             }
 
-            // Inverte a ordem do array para exibir os mais recentes primeiro
-            data.reverse().forEach(item => { 
+            data.sort((a, b) => new Date(b.data) - new Date(a.data));
+            const recentData = data.slice(0, 5); 
+
+            recentData.forEach(item => { 
                 const row = document.createElement('tr');
                 row.dataset.recordRawDate = item.data;
-                row.dataset.recordModelo = item.modelo;
-                row.dataset.recordCliente = item.cliente;
-
-                let pressTimer;
-                const PRESS_DURATION = 5000;
-
-                row.addEventListener('mousedown', (e) => {
-                    e.preventDefault();
-                    row.classList.add('long-press-active');
-                    pressTimer = setTimeout(() => {
-                        row.classList.remove('long-press-active');
-                        showDeleteConfirmation(item);
-                    }, PRESS_DURATION);
-                });
-
-                row.addEventListener('mouseup', () => {
-                    clearTimeout(pressTimer);
-                    row.classList.remove('long-press-active');
-                });
-
-                row.addEventListener('mouseleave', () => {
-                    clearTimeout(pressTimer);
-                    row.classList.remove('long-press-active');
-                });
-
-                row.addEventListener('touchstart', (e) => {
-                    e.preventDefault();
-                    row.classList.add('long-press-active');
-                    pressTimer = setTimeout(() => {
-                        row.classList.remove('long-press-active');
-                        showDeleteConfirmation(item);
-                    }, PRESS_DURATION);
-                }, { passive: false });
-
-                row.addEventListener('touchend', () => {
-                    clearTimeout(pressTimer);
-                    row.classList.remove('long-press-active');
-                });
-
-                row.addEventListener('touchcancel', () => {
-                    clearTimeout(pressTimer);
-                    row.classList.remove('long-press-active');
-                });
-
-                // Célula de Data/Hora
+                row.setAttribute('tabindex', '0');
+                let pressTimer, PRESS_DURATION = 3000;
+                const startPress = (e) => { e.preventDefault(); row.classList.add('long-press-active'); pressTimer = setTimeout(() => { row.classList.remove('long-press-active'); showDeleteConfirmation(item); }, PRESS_DURATION); };
+                const endPress = () => { clearTimeout(pressTimer); row.classList.remove('long-press-active'); };
+                ['mousedown', 'touchstart'].forEach(evt => row.addEventListener(evt, startPress, evt === 'touchstart' ? { passive: false } : false));
+                ['mouseup', 'mouseleave', 'touchend', 'touchcancel'].forEach(evt => row.addEventListener(evt, endPress));
+                
                 const dataCell = document.createElement('td');
-                try {
-                    const date = new Date(item.data);
-                    dataCell.textContent = date.toLocaleDateString('pt-BR', {
-                        year: 'numeric',
-                        month: '2-digit',
-                        day: '2-digit',
-                        hour: '2-digit',
-                        minute: '2-digit'
-                    });
-                } catch (e) {
-                    dataCell.textContent = item.data || '';
-                }
+                try { const date = new Date(item.data); dataCell.textContent = date.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }); dataCell.setAttribute('title', date.toISOString()); } catch (e) { dataCell.textContent = item.data || 'Data inválida'; }
                 row.appendChild(dataCell);
-
-                // Célula de Modelo
-                const modeloCell = document.createElement('td');
-                modeloCell.textContent = item.modelo || '';
-                row.appendChild(modeloCell);
-
-                // Célula de Cliente
-                const clienteCell = document.createElement('td');
-                clienteCell.textContent = item.cliente || '';
-                row.appendChild(clienteCell);
-
+                
+                // MODIFIED: Removed 'nome_tester' from keys
+                ['modelo', 'cliente'].forEach(key => {
+                    const cell = document.createElement('td'); cell.textContent = item[key] || 'N/I'; row.appendChild(cell);
+                });
                 tableBody.appendChild(row);
             });
 
-            recordsStatusDiv.classList.add('success');
-            recordsStatusDiv.textContent = `Dados carregados com sucesso. Total: ${data.length} registros.`;
+            if (recentData.length > 0) {
+                let message = Exibindo ${recentData.length} registro(s) mais recente(s).;
+                if (totalRecords > 5) {
+                    message = Exibindo os 5 registros mais recentes (de um total de ${totalRecords}).;
+                } else {
+                     message = Dados carregados. Total: ${totalRecords} registro(s).;
+                }
+                showStatusMessage(recordsStatusDiv, message, 'success');
+            } else {
+                showStatusMessage(recordsStatusDiv, 'Nenhum registro encontrado para exibir.', 'success');
+            }
 
         } catch (error) {
             console.error('Erro ao buscar dados:', error);
-            recordsStatusDiv.classList.add('error');
-            recordsStatusDiv.textContent = 'Erro ao carregar os registros: ' + error.message;
+            showStatusMessage(recordsStatusDiv, 'Falha ao carregar os registros: ' + error.message, 'error');
         } finally {
             loadingData.classList.add('hidden');
         }
@@ -1416,75 +1024,43 @@
 
     function showDeleteConfirmation(record) {
         recordToDelete = record;
-        deleteRecordInfo.textContent = `${record.modelo} - ${record.cliente} (${new Date(record.data).toLocaleString('pt-BR')})`;
+        deleteRecordInfo.textContent = ${record.modelo} - ${record.cliente} (Data: ${new Date(record.data).toLocaleDateString('pt-BR')});
         confirmDeleteModal.classList.add('visible');
+        confirmDeleteBtn.focus();
     }
 
     confirmDeleteBtn.addEventListener('click', () => {
-        if (recordToDelete) {
-            deleteRecord(recordToDelete.data);
-            recordToDelete = null;
+        if (recordToDelete && recordToDelete.data) { deleteRecord(recordToDelete.data); } 
+        else { 
+            console.error("Informação do registro para exclusão está incompleta.", recordToDelete);
+            showStatusMessage(recordsStatusDiv, 'Erro: Informação do registro para exclusão está incompleta.', 'error');
         }
-        confirmDeleteModal.classList.remove('visible');
+        recordToDelete = null; confirmDeleteModal.classList.remove('visible');
     });
+    cancelDeleteBtn.addEventListener('click', () => { recordToDelete = null; confirmDeleteModal.classList.remove('visible'); });
 
-    cancelDeleteBtn.addEventListener('click', () => {
-        recordToDelete = null;
-        confirmDeleteModal.classList.remove('visible');
-    });
-
-    async function deleteRecord(recordDate) {
-        recordsStatusDiv.textContent = '';
-        recordsStatusDiv.className = '';
+    async function deleteRecord(recordDateISO) {
+        clearStatusMessage(recordsStatusDiv);
         loadingData.classList.remove('hidden');
-        recordsStatusDiv.textContent = 'Excluindo registro...';
-
+        showStatusMessage(recordsStatusDiv, 'Excluindo registro...', 'success'); 
         try {
-            const data = {
-                action: 'delete',
-                data: recordDate
-            };
-
-            const response = await fetch(SCRIPT_URL, {
-                method: 'POST',
-                mode: 'no-cors',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-
-            recordsStatusDiv.classList.add('success');
-            recordsStatusDiv.textContent = 'Registro excluído com sucesso (atualizando tabela)...';
+            const payload = { action: 'delete', data: recordDateISO };
+            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
+            showStatusMessage(recordsStatusDiv, 'Solicitação de exclusão enviada. Atualizando lista...', 'success');
             fetchDataAndDisplay();
-
         } catch (error) {
             console.error('Erro ao excluir registro:', error);
-            recordsStatusDiv.classList.add('error');
-            recordsStatusDiv.textContent = 'Erro ao excluir o registro: ' + error.message;
-        } finally {
-            loadingData.classList.add('hidden');
+            showStatusMessage(recordsStatusDiv, 'Erro ao tentar excluir o registro: ' + error.message, 'error');
         }
     }
 
-    // --- Funções para o Guia de Uso ---
-    helpBtn.addEventListener('click', () => {
-        guideModal.classList.add('visible');
-    });
-
-    closeGuideBtn.addEventListener('click', () => {
-        guideModal.classList.remove('visible');
-    });
-
-    function updateHelpButtonVisibility() {
-        const isInitialScreen = clienteField.classList.contains('hidden') && 
-                              componentesField.classList.contains('hidden');
-        
-        helpBtn.style.display = isInitialScreen ? 'flex' : 'none';
-    }
-
-    // Inicialização
+    helpBtn.addEventListener('click', () => { guideModal.classList.add('visible'); });
+    closeGuideBtn.addEventListener('click', () => { guideModal.classList.remove('visible'); });
+    
     document.addEventListener('DOMContentLoaded', () => {
-        updateHelpButtonVisibility();
         testerNameInput.focus();
+        mainApp.style.display = 'none';
+        loginScreen.classList.remove('hidden-auth');
     });
 </script>
 </body>
