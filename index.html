@@ -416,15 +416,14 @@
         .modal-actions button.delete-btn:hover { background-color: #D32F2F; }
 
         .data-table-container {
-            /* max-height: 450px; /* MODIFIED: Removed or commented out */
-            overflow-y: auto; /* Kept for internal table scroll if needed */
+            overflow-y: auto;
             border: 1px solid var(--border-color);
             border-radius: 12px;
             background-color: var(--card-background);
             box-shadow: var(--shadow-sm);
             margin-top: 10px;
-            flex-grow: 1; /* MODIFIED: Added */
-            min-height: 0; /* MODIFIED: Added for better flex behavior with overflow */
+            flex-grow: 1;
+            min-height: 0;
         }
         .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
         .data-table th, .data-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid #E0E0E0; }
@@ -497,10 +496,10 @@
         }
 
         .records-modal { z-index: 1001; }
-        .records-content { /* Uses .modal-content structure */
+        .records-content {
             max-width: 950px; 
             max-height: 90vh;
-            overflow-y: auto; /* MODIFIED: Added for explicitness, modal will scroll if content overflows */
+            overflow-y: auto;
         }
         .records-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
         .records-header h2 { color: var(--primary-color); font-size: 1.9rem; margin: 0; font-weight: 600; }
@@ -547,11 +546,11 @@
             to { transform: translateY(0) scale(1); opacity: 1; }
         }
 
-        .login-container h1 { margin-bottom: 30px; color: var(--primary-color); font-size: 2rem; font-weight: 700; }
+        .login-container h1 { margin-bottom: 20px; color: var(--primary-color); font-size: 2rem; font-weight: 700; }
         
         .login-container input[type="text"] {
             width: 100%; padding: 16px 18px; border: 1px solid var(--border-color);
-            border-radius: 12px; font-size: 1.05rem; margin-bottom: 30px;
+            border-radius: 12px; font-size: 1.05rem; margin-bottom: 15px;
             transition: all 0.3s ease; text-align: center; background-color: #f8fafc;
             box-shadow: var(--shadow-xs);
         }
@@ -560,6 +559,56 @@
             box-shadow: 0 0 0 3.5px var(--focus-shadow-color), var(--shadow-sm);
             outline: none; background-color: var(--card-background);
         }
+        
+        /* Styles for the new fixed color picker */
+        .login-container .color-picker-field {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .login-container .color-picker-field label {
+            font-weight: 500;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        .login-container .color-options {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .login-container .color-option {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 3px solid transparent;
+            position: relative;
+        }
+        .login-container .color-option:hover {
+            transform: scale(1.15);
+        }
+        .login-container .color-option.selected {
+            border-color: var(--primary-color);
+            transform: scale(1.1);
+        }
+        .login-container .color-option.selected::after {
+            content: '\f00c'; /* Font Awesome check icon */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            text-shadow: 0 0 3px rgba(0,0,0,0.6);
+            font-size: 16px;
+        }
+
+
         .login-container button {
             width: 100%; padding: 16px;
             background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
@@ -579,7 +628,7 @@
             background: var(--primary-color); color: white; padding: 10px 25px;
             border-radius: 30px; font-size: 0.95rem; font-weight: 500;
             box-shadow: var(--shadow-md); z-index: 100; display: flex;
-            align-items: center; gap: 10px; transition: transform 0.3s ease, opacity 0.3s ease;
+            align-items: center; gap: 10px; transition: all 0.3s ease;
         }
         .tester-name-display:hover { transform: translateX(-50%) translateY(-2px); }
 
@@ -603,6 +652,11 @@
         <h1><i class="fas fa-user-check" style="margin-right: 10px;"></i>Identificação</h1>
         <div class="field">
             <input type="text" id="testerName" placeholder="Digite seu nome" required autofocus />
+        </div>
+        <div class="field color-picker-field">
+            <label>Sua cor de identificação</label>
+            <div class="color-options" id="colorOptions">
+                </div>
         </div>
         <button type="button" id="loginBtn">
             <i class="fas fa-sign-in-alt"></i> Iniciar Testes
@@ -736,7 +790,7 @@
 </div>
 
 <script>
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz45HNgoIKhQCwRuXtCCqtjvCNf885rBifbQFg8dAt5qSR9vdAZNmdO8l3iRPtaLLrlfw/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwFaC9vMIxRF8uA7w2-3TzX4BH4NbZl5VehIwxruE_Vj6N6eC5qpIPVUWxj-R8QLiQH/exec';
 
     const componentes = [
         { id: 'aht10', label: 'AHT10' }, { id: 'botao_esquerdo', label: 'Botão Esquerdo' },
@@ -746,7 +800,8 @@
         { id: 'display', label: 'Display' }, { id: 'led_azul', label: 'LED Azul' },
         { id: 'ledrgb', label: 'LED RGB' }, { id: 'ldr', label: 'LDR' },
         { id: 'ntc', label: 'NTC' }, { id: 'relay', label: 'Relay' },
-        { id: 'tm1637', label: 'TM1637' }, { id: 'watchdog', label: 'Watchdog' }
+        { id: 'tm1637', label: 'TM1637' }, { id: 'watchdog', label: 'Watchdog' },
+        { id: 'serigrafia', label: 'Serigrafia' }
     ];
 
     const STATUS_NA = 'N/A'; const STATUS_OK = 'OK'; const STATUS_FALHA = 'FALHA';
@@ -762,7 +817,18 @@
     const mainApp = document.getElementById('mainApp');
     const testerNameDisplay = document.getElementById('testerNameDisplay');
     const testerNameText = document.getElementById('testerNameText');
+    
+    const colorOptionsContainer = document.getElementById('colorOptions');
+    // MODIFIED: One color removed from the array
+    const softColors = [
+        { name: 'Azul Suave', hex: '#DBEAFE' },
+        { name: 'Verde Suave', hex: '#D1FAE5' },
+        { name: 'Rosa Suave', hex: '#FEE2E2' },
+        { name: 'Roxo Suave', hex: '#E0E7FF' },
+        { name: 'Cinza Suave', hex: '#E5E7EB' }
+    ];
     let testerName = '';
+    let testerColor = softColors[0].hex; // Default color
 
     const modeloSelect = document.getElementById('modelo');
     const clienteInput = document.getElementById('cliente');
@@ -800,9 +866,9 @@
 
     function showStatusMessage(element, message, type = 'success') {
         element.textContent = message;
-        element.className = `records-status active ${type}`; 
+        element.className = records-status active ${type}; 
         if (element.id === 'status') {
-            element.className = `active ${type}`; 
+            element.className = active ${type}; 
         }
     }
 
@@ -810,7 +876,6 @@
         element.textContent = '';
         element.className = (element.id === 'status') ? '' : 'records-status';
     }
-
 
     loginBtn.addEventListener('click', () => {
         const name = testerNameInput.value.trim();
@@ -824,11 +889,25 @@
         }
         testerName = name;
         testerNameText.textContent = testerName;
+        testerNameDisplay.style.backgroundColor = testerColor;
+        testerNameDisplay.style.color = getContrastingTextColor(testerColor);
+
         loginScreen.classList.add('hidden-auth');
         mainApp.style.display = 'flex';
         setTimeout(() => { loginScreen.style.display = 'none'; }, 500);
         modeloSelect.focus();
     });
+    
+    function getContrastingTextColor(hexcolor){
+        if (hexcolor.slice(0, 1) === '#') { hexcolor = hexcolor.slice(1); }
+        const r = parseInt(hexcolor.substr(0,2),16);
+        const g = parseInt(hexcolor.substr(2,2),16);
+        const b = parseInt(hexcolor.substr(4,2),16);
+        const yiq = ((r*299)+(g*587)+(b*114))/1000;
+        return (yiq >= 128) ? '#1F2937' : 'white';
+    }
+
+
     testerNameInput.addEventListener('keypress', (event) => { if (event.key === "Enter") { event.preventDefault(); loginBtn.click(); } });
 
     modeloSelect.addEventListener('change', () => {
@@ -868,13 +947,13 @@
                 div.dataset.componentId = comp.id;
                 div.setAttribute('tabindex', '0');
                 const icon = document.createElement('i');
-                icon.className = `icon ${statusIcons[STATUS_NA]}`;
+                icon.className = icon ${statusIcons[STATUS_NA]};
                 const nome = document.createElement('span');
                 nome.textContent = comp.label;
                 const obsTextarea = document.createElement('textarea');
                 obsTextarea.className = 'component-obs hidden';
                 obsTextarea.placeholder = 'Detalhe a falha aqui...';
-                obsTextarea.setAttribute('aria-label', `Observação para ${comp.label}`);
+                obsTextarea.setAttribute('aria-label', Observação para ${comp.label});
                 obsTextarea.addEventListener('click', (e) => e.stopPropagation());
                 obsTextarea.addEventListener('input', (e) => { estadoComponentes[comp.id].obs = e.target.value; });
                 div.append(icon, nome, obsTextarea);
@@ -885,8 +964,8 @@
                     let ns = statusCycle[ni];
                     estadoComponentes[comp.id].status = ns;
                     div.classList.remove('status-na', 'status-ok', 'status-falha');
-                    div.classList.add(`status-${ns === STATUS_NA ? 'na' : ns.toLowerCase()}`);
-                    icon.className = `icon ${statusIcons[ns]}`;
+                    div.classList.add(status-${ns === STATUS_NA ? 'na' : ns.toLowerCase()});
+                    icon.className = icon ${statusIcons[ns]};
                     if (ns === STATUS_FALHA) {
                         obsTextarea.classList.remove('hidden'); obsTextarea.focus();
                     } else {
@@ -908,7 +987,7 @@
         if (!clienteInput.value.trim()) { showStatusMessage(statusDiv, 'Por favor, informe o nome do cliente.', 'error'); clienteInput.focus(); return; }
         clearStatusMessage(statusDiv);
         confirmSendModal.classList.add('visible');
-        confirmSendBtn.focus(); // MODIFIED: Focus on confirm button
+        confirmSendBtn.focus();
     });
 
     confirmSendBtn.addEventListener('click', () => {
@@ -926,7 +1005,15 @@
     });
 
     function enviarDados() {
-        const dataPayload = { action: 'create', data: new Date().toISOString(), modelo: form.modelo.value, cliente: form.cliente.value, nome_tester: testerName, observacao: observacaoTextarea.value.trim() };
+        const dataPayload = { 
+            action: 'create', 
+            data: new Date().toISOString(), 
+            modelo: form.modelo.value, 
+            cliente: form.cliente.value, 
+            nome_tester: testerName, 
+            tester_color: testerColor,
+            observacao: observacaoTextarea.value.trim() 
+        };
         componentes.forEach(comp => {
             const compState = estadoComponentes[comp.id];
             if (compState) {
@@ -967,8 +1054,8 @@
         clearStatusMessage(recordsStatusDiv);
         tableBody.innerHTML = '';
         try {
-            const response = await fetch(`${SCRIPT_URL}?v=${new Date().getTime()}`, { method: 'GET' });
-            if (!response.ok) throw new Error(`Erro HTTP: ${response.status} ${response.statusText}`);
+            const response = await fetch(${SCRIPT_URL}?v=${new Date().getTime()}, { method: 'GET' });
+            if (!response.ok) throw new Error(Erro HTTP: ${response.status} ${response.statusText});
             const data = await response.json();
             
             const totalRecords = data.length;
@@ -995,7 +1082,6 @@
                 try { const date = new Date(item.data); dataCell.textContent = date.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }); dataCell.setAttribute('title', date.toISOString()); } catch (e) { dataCell.textContent = item.data || 'Data inválida'; }
                 row.appendChild(dataCell);
                 
-                // MODIFIED: Removed 'nome_tester' from keys
                 ['modelo', 'cliente'].forEach(key => {
                     const cell = document.createElement('td'); cell.textContent = item[key] || 'N/I'; row.appendChild(cell);
                 });
@@ -1003,11 +1089,11 @@
             });
 
             if (recentData.length > 0) {
-                let message = `Exibindo ${recentData.length} registro(s) mais recente(s).`;
+                let message = Exibindo ${recentData.length} registro(s) mais recente(s).;
                 if (totalRecords > 5) {
-                    message = `Exibindo os 5 registros mais recentes (de um total de ${totalRecords}).`;
+                    message = Exibindo os 5 registros mais recentes (de um total de ${totalRecords}).;
                 } else {
-                     message = `Dados carregados. Total: ${totalRecords} registro(s).`;
+                     message = Dados carregados. Total: ${totalRecords} registro(s).;
                 }
                 showStatusMessage(recordsStatusDiv, message, 'success');
             } else {
@@ -1024,7 +1110,7 @@
 
     function showDeleteConfirmation(record) {
         recordToDelete = record;
-        deleteRecordInfo.textContent = `${record.modelo} - ${record.cliente} (Data: ${new Date(record.data).toLocaleDateString('pt-BR')})`;
+        deleteRecordInfo.textContent = ${record.modelo} - ${record.cliente} (Data: ${new Date(record.data).toLocaleDateString('pt-BR')});
         confirmDeleteModal.classList.add('visible');
         confirmDeleteBtn.focus();
     }
@@ -1057,8 +1143,45 @@
     helpBtn.addEventListener('click', () => { guideModal.classList.add('visible'); });
     closeGuideBtn.addEventListener('click', () => { guideModal.classList.remove('visible'); });
     
+    function createColorSwatches() {
+        softColors.forEach(color => {
+            const swatch = document.createElement('div');
+            swatch.className = 'color-option';
+            swatch.style.backgroundColor = color.hex;
+            swatch.dataset.color = color.hex;
+            swatch.title = color.name;
+            swatch.setAttribute('role', 'button');
+            swatch.setAttribute('tabindex', '0');
+
+            if (color.hex === testerColor) {
+                swatch.classList.add('selected');
+            }
+            colorOptionsContainer.appendChild(swatch);
+        });
+    }
+
+    colorOptionsContainer.addEventListener('click', (e) => {
+        const target = e.target;
+        if (target.classList.contains('color-option')) {
+            const currentSelected = colorOptionsContainer.querySelector('.selected');
+            if (currentSelected) {
+                currentSelected.classList.remove('selected');
+            }
+            target.classList.add('selected');
+            testerColor = target.dataset.color;
+        }
+    });
+
+    colorOptionsContainer.addEventListener('keypress', (e) => {
+        if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('color-option')) {
+            e.preventDefault();
+            e.target.click();
+        }
+    });
+
     document.addEventListener('DOMContentLoaded', () => {
         testerNameInput.focus();
+        createColorSwatches();
         mainApp.style.display = 'none';
         loginScreen.classList.remove('hidden-auth');
     });
