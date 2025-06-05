@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Registro de Testes Moderno</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3B82F6; 
+            --primary-dark: #2563EB; 
+            --primary-light: #DBEAFE; 
+            --accent-color: #F59E0B;
+            
+            --background-gradient: linear-gradient(135deg, #F3F4F6, #E5E7EB);
+            --card-background: #ffffff;
+            --text-color: #1F2937;
+            --text-color-light: #4B5563;
+            --placeholder-color: #9CA3AF;
+            --border-color: #D1D5DB;
+            --focus-border-color: var(--primary-color);
+            --focus-shadow-color: rgba(59, 130, 246, 0.25);
+
+            --shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+            --shadow-sm: 0 2px 4px -1px rgba(0, 0, 0, 0.06), 0 1px 2px -1px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 8px -2px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+
+            --success-bg: #D1FAE5;
+            --success-border: #10B981;
+            --success-text: #047857;
+
+            --failure-bg: #FEE2E2;
+            --failure-border: #EF4444;
+            --failure-text: #B91C1C;
+
+            --na-bg: #E5E7EB;
+            --na-border: #9CA3AF;
+            --na-text: #4B5563;
+
+            --delete-bg: var(--failure-bg);
+            --delete-border: var(--failure-border);
+            --delete-text: var(--failure-text);
+            
+            --font-family: 'Poppins', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font-family);
+        }
+
+        body {
+            background: var(--background-gradient);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--text-color);
+            transition: background 0.3s ease;
+        }
+
+        .app {
+            background: var(--card-background);
+            padding: 35px 40px;
+            border-radius: 20px;
+            box-shadow: var(--shadow-lg);
+            width: 100%;
+            max-width: 850px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            position: relative;
+            transition: box-shadow 0.3s ease;
+        }
+        .app:hover {
+            box-shadow: var(--shadow-xl);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        label {
+            font-weight: 600;
+            color: var(--text-color);
+            font-size: 0.9rem;
+        }
+
+        select,
+        input[type="text"] {
+            padding: 14px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease;
+            color: var(--text-color);
+            background-color: #f8fafc; 
+            box-shadow: var(--shadow-xs);
+        }
+
+        select::placeholder,
+        input[type="text"]::placeholder {
+            color: var(--placeholder-color);
+        }
+
+        select:focus,
+        input[type="text"]:focus {
+            border-color: var(--focus-border-color);
+            box-shadow: 0 0 0 3px var(--focus-shadow-color), var(--shadow-sm);
+            outline: none;
+            background-color: var(--card-background);
+        }
+
+        fieldset {
+            border: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+
+        legend {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--primary-dark);
+            font-size: 1.1rem;
+        }
+
+        .components {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+        }
+
+        .component {
+            background: var(--na-bg);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            user-select: none;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease, border-color 0.3s ease;
+            border: 1px solid var(--na-border);
+            min-height: 100px;
+            text-align: center;
+            position: relative;
+        }
+
+        .component:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-3px);
+        }
+
+        .component:active {
+            transform: scale(0.96) translateY(-1px);
+        }
+
+        .component .icon {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            line-height: 1;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .component span {
+            font-weight: 500;
+            font-size: 0.95rem;
+            color: var(--na-text);
+            pointer-events: none;
+            margin-bottom: 5px;
+        }
+
+        .component textarea {
+            width: calc(100% - 16px);
+            padding: 8px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            resize: vertical;
+            min-height: 35px;
+            max-height: 90px;
+            box-shadow: var(--shadow-xs);
+            margin-top: 8px;
+            color: var(--text-color);
+            background-color: var(--card-background);
+        }
+        .component textarea::placeholder { color: var(--placeholder-color); }
+        .component textarea:focus {
+            border-color: var(--focus-border-color);
+            box-shadow: 0 0 0 2.5px var(--focus-shadow-color);
+            outline: none;
+        }
+
+        .status-na { background-color: var(--na-bg); border-color: var(--na-border); }
+        .status-na span { color: var(--na-text); }
+        .status-na .icon { color: var(--na-text); }
+
+        .status-ok { background-color: var(--success-bg); border-color: var(--success-border); }
+        .status-ok span { color: var(--success-text); }
+        .status-ok .icon { color: var(--success-border); animation: pulseGreen 0.7s cubic-bezier(0.25, 0.1, 0.25, 1); }
+
+        .status-falha { background-color: var(--failure-bg); border-color: var(--failure-border); padding-bottom: 12px; min-height: 130px; }
+        .status-falha span { color: var(--failure-text); }
+        .status-falha .icon { color: var(--failure-border); animation: shakeRed 0.5s cubic-bezier(.36,-0.64,.34,1.55); }
+
+        @keyframes pulseGreen {
+            0% { transform: scale(0.9); opacity: 0.8; }
+            50% { transform: scale(1.15); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes shakeRed {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-4px); }
+            20%, 40%, 60%, 80% { transform: translateX(4px); }
+        }
+        
+        button[type="submit"] {
+            padding: 15px 20px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            margin-top: 20px;
+            box-shadow: var(--shadow-md);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        button[type="submit"]:hover:not(:disabled) {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: var(--shadow-lg);
+        }
+
+        button[type="submit"]:disabled {
+            background-color: #BDBDBD;
+            background-image: none;
+            cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
+            color: #757575;
+        }
+
+        button[type="submit"]:active:not(:disabled) {
+            transform: translateY(-1px) scale(0.98);
+            box-shadow: var(--shadow-sm);
+        }
+
+        #status, .records-status {
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-top: 15px;
+            padding: 12px 15px;
+            border-radius: 10px;
+            border: 1px solid transparent;
+            opacity: 0; 
+            transform: translateY(10px); 
+            transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, 
+                        opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        #status.active, .records-status.active { 
+            opacity: 1;
+            transform: translateY(0);
+        }
+        #status.success, .records-status.success {
+            background-color: var(--success-bg);
+            color: var(--success-text);
+            border-color: var(--success-border);
+            box-shadow: var(--shadow-sm);
+        }
+        #status.error, .records-status.error {
+            background-color: var(--failure-bg);
+            color: var(--failure-text);
+            border-color: var(--failure-border);
+            box-shadow: var(--shadow-sm);
+        }
+        .records-status {
+             margin-top: 10px;
+        }
+
+
+        .hidden { display: none !important; }
+
+        @media (max-width: 600px) {
+            .app { padding: 25px; gap: 20px; }
+            h1 { font-size: 1.9rem; }
+            .components { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+            .component { min-height: 90px; padding: 15px 12px; }
+            .component .icon { font-size: 2rem; }
+            .component span { font-size: 0.9rem; }
+            button[type="submit"] { font-size: 0.95rem; padding: 14px; }
+            label, legend { font-size: 0.85rem; }
+            select, input[type="text"] { padding: 12px 14px; }
+            .status-falha { min-height: 110px; }
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(30, 41, 59, 0.6); 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s ease, visibility 0s linear 0.35s;
+        }
+
+        .modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.35s ease, visibility 0s linear 0s;
+        }
+
+        .modal-content {
+            background: var(--card-background);
+            padding: 35px;
+            border-radius: 18px;
+            box-shadow: var(--shadow-xl);
+            width: 90%;
+            max-width: 550px;
+            transform: translateY(30px) scale(0.95);
+            opacity: 0;
+            transition: transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.35s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .modal-overlay.visible .modal-content {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .modal-content h2 {
+            font-size: 1.9rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+            text-align: center;
+            font-weight: 600;
+        }
+        .modal-content.delete h2 { color: var(--failure-border); }
+        .modal-content.feedback h2 { color: var(--accent-color); } /* New style for feedback modal */
+
+        .modal-content p { font-size: 1rem; line-height: 1.6; text-align: center; color: var(--text-color-light); margin-bottom: 10px; }
+
+        .modal-content textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            resize: vertical;
+            color: var(--text-color);
+            background-color: #f8fafc;
+            box-shadow: var(--shadow-xs);
+            margin-top: 5px;
+        }
+        .modal-content textarea::placeholder { color: var(--placeholder-color); }
+        .modal-content textarea:focus {
+             border-color: var(--focus-border-color);
+            box-shadow: 0 0 0 3px var(--focus-shadow-color);
+            outline: none;
+            background-color: var(--card-background);
+        }
+        .modal-content select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            font-size: 1rem;
+            color: var(--text-color);
+            background-color: #f8fafc;
+            box-shadow: var(--shadow-xs);
+        }
+        .modal-content select:focus {
+            border-color: var(--focus-border-color);
+            box-shadow: 0 0 0 3px var(--focus-shadow-color);
+            outline: none;
+            background-color: var(--card-background);
+        }
+
+        .modal-actions { display: flex; justify-content: space-around; gap: 20px; margin-top: 10px; }
+        .modal-actions button {
+            flex: 1;
+            padding: 14px 22px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+            box-shadow: var(--shadow-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .modal-actions button:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .modal-actions button:active { transform: translateY(0px); box-shadow: var(--shadow-xs); }
+
+        .modal-actions button.confirm { background-color: var(--primary-color); color: #fff; }
+        .modal-actions button.confirm:hover { background-color: var(--primary-dark); }
+        .modal-actions button.cancel { background-color: #B0BEC5; color: var(--text-color); }
+        .modal-actions button.cancel:hover { background-color: #90A4AE; }
+        .modal-actions button.delete-btn { background-color: var(--failure-border); color: #fff; }
+        .modal-actions button.delete-btn:hover { background-color: #D32F2F; }
+        .modal-actions button.submit-feedback-btn { background-color: var(--accent-color); color: #fff; } /* New style for feedback submit */
+        .modal-actions button.submit-feedback-btn:hover { background-color: #E08D00; }
+
+        .data-table-container {
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background-color: var(--card-background);
+            box-shadow: var(--shadow-sm);
+            margin-top: 10px;
+            flex-grow: 1;
+            min-height: 0;
+        }
+        .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+        .data-table th, .data-table td { padding: 14px 18px; text-align: left; border-bottom: 1px solid #E0E0E0; }
+        .data-table td { color: var(--text-color-light); }
+        .data-table th {
+            background-color: var(--primary-light);
+            color: var(--primary-dark);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            border-bottom-width: 2px;
+            border-bottom-color: var(--primary-color);
+        }
+        .data-table th:first-child { border-top-left-radius: 11px; }
+        .data-table th:last-child { border-top-right-radius: 11px; }
+        .data-table tbody tr:nth-child(even) { background-color: #FAFAFA; }
+        .data-table tbody tr:hover { background-color: #F5F5F5; transition: background-color 0.2s ease; }
+        .data-table tbody tr.long-press-active {
+            background-color: var(--delete-bg);
+            border: 1px solid var(--delete-border);
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.5); 
+            color: var(--delete-text);
+        }
+        .data-table tbody tr.long-press-active td { color: var(--delete-text); }
+
+        .loading-message {
+            text-align: center;
+            padding: 25px;
+            font-size: 1.1rem;
+            color: var(--text-color-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .loading-message::before {
+            content: '\f110'; font-family: 'Font Awesome 6 Free'; font-weight: 900;
+            animation: fa-spin 1s infinite linear; font-size: 1.3em;
+        }
+
+        .view-records-btn, .help-btn {
+            position: fixed;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 1.6rem;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+            z-index: 999;
+        }
+        .view-records-btn { bottom: 30px; right: 30px; }
+        .help-btn { bottom: 30px; left: 30px; }
+
+        .view-records-btn:hover, .help-btn:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: var(--shadow-xl);
+        }
+        .view-records-btn:active, .help-btn:active {
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+
+        .records-modal { z-index: 1001; }
+        .records-content {
+            max-width: 950px; 
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .records-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .records-header h2 { color: var(--primary-color); font-size: 1.9rem; margin: 0; font-weight: 600; }
+        .close-records-btn, .close-guide-btn, .close-feedback-btn { /* Added .close-feedback-btn */
+            background: transparent; border: none; font-size: 2rem; cursor: pointer;
+            color: var(--text-color-light); transition: color 0.25s ease, transform 0.2s ease;
+            padding: 5px; line-height: 1;
+        }
+        .close-records-btn:hover, .close-guide-btn:hover, .close-feedback-btn:hover { color: var(--primary-dark); transform: rotate(90deg); } /* Added .close-feedback-btn */
+        
+        #confirmDeleteModal { z-index: 1002; }
+
+        .guide-modal { z-index: 1003; }
+        .guide-content { max-width: 750px; max-height: 85vh; overflow-y: auto; }
+        .guide-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 15px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color);
+        }
+        .guide-header h2 { color: var(--primary-color); font-size: 1.9rem; margin: 0; font-weight: 600; }
+        .guide-section { margin-bottom: 25px; }
+        .guide-section h3 { color: var(--primary-dark); margin-bottom: 12px; font-size: 1.35rem; font-weight: 600; }
+        .guide-section p, .guide-section li { margin-bottom: 10px; line-height: 1.7; color: var(--text-color-light); font-size: 0.95rem; }
+        .guide-section ul { padding-left: 25px; margin-bottom: 12px; }
+        .guide-section strong { color: var(--text-color); font-weight: 500; }
+        .guide-section i.fas { color: var(--primary-color); margin: 0 2px;}
+
+
+        .login-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--background-gradient); display: flex; justify-content: center;
+            align-items: center; z-index: 2000; padding: 20px;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .login-screen.hidden-auth { opacity: 0; visibility: hidden; }
+
+        .login-container {
+            background: var(--card-background); padding: 45px; border-radius: 24px;
+            box-shadow: var(--shadow-xl); width: 100%; max-width: 480px; text-align: center;
+            transform: translateY(-20px) scale(0.98); opacity: 0;
+            animation: fadeInUpLogin 0.6s 0.2s ease-out forwards;
+        }
+
+        @keyframes fadeInUpLogin {
+            to { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        .login-container h1 { margin-bottom: 20px; color: var(--primary-color); font-size: 2rem; font-weight: 700; }
+        
+        .login-container input[type="text"] {
+            width: 100%; padding: 16px 18px; border: 1px solid var(--border-color);
+            border-radius: 12px; font-size: 1.05rem; margin-bottom: 15px;
+            transition: all 0.3s ease; text-align: center; background-color: #f8fafc;
+            box-shadow: var(--shadow-xs);
+        }
+        .login-container input[type="text"]:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3.5px var(--focus-shadow-color), var(--shadow-sm);
+            outline: none; background-color: var(--card-background);
+        }
+        
+        /* Styles for the new fixed color picker */
+        .login-container .color-picker-field {
+            margin-bottom: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        .login-container .color-picker-field label {
+            font-weight: 500;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        .login-container .color-options {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .login-container .color-option {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 3px solid transparent;
+            position: relative;
+        }
+        .login-container .color-option:hover {
+            transform: scale(1.15);
+        }
+        .login-container .color-option.selected {
+            border-color: var(--primary-color);
+            transform: scale(1.1);
+        }
+        .login-container .color-option.selected::after {
+            content: '\f00c'; /* Font Awesome check icon */
+            font-family: 'Font Awesome 6 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            text-shadow: 0 0 3px rgba(0,0,0,0.6);
+            font-size: 16px;
+        }
+
+
+        .login-container button {
+            width: 100%; padding: 16px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white; border: none; border-radius: 12px; font-size: 1.1rem;
+            font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: var(--shadow-md); text-transform: uppercase; letter-spacing: 0.8px;
+        }
+        .login-container button:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
+            transform: translateY(-3px) scale(1.02); box-shadow: var(--shadow-lg);
+        }
+        .login-container button:active { transform: translateY(-1px) scale(0.99); box-shadow: var(--shadow-sm); }
+        .login-container button i { margin-right: 10px; }
+
+        .tester-name-display {
+            position: fixed; top: 15px; left: 50%; transform: translateX(-50%);
+            background: var(--primary-color); color: white; padding: 10px 25px;
+            border-radius: 30px; font-size: 0.95rem; font-weight: 500;
+            box-shadow: var(--shadow-md); z-index: 100; display: flex;
+            align-items: center; gap: 10px; transition: all 0.3s ease;
+            cursor: pointer; /* Make it clear it's interactive */
+        }
+        .tester-name-display:hover { transform: translateX(-50%) translateY(-2px); }
+        .tester-name-display.long-press-active {
+            box-shadow: 0 0 15px var(--accent-color);
+            transform: translateX(-50%) scale(1.05);
+            background-color: var(--accent-color); /* Temporary feedback color */
+        }
+
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-6px); }
+            20%, 40%, 60%, 80% { transform: translateX(6px); }
+        }
+        
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #a1a1a1; }
+
+    </style>
+</head>
+<body>
+
+<div class="login-screen" id="loginScreen">
+    <div class="login-container">
+        <h1><i class="fas fa-user-check" style="margin-right: 10px;"></i>Identificação</h1>
+        <div class="field">
+            <input type="text" id="testerName" placeholder="Digite seu nome" required autofocus />
+        </div>
+        <div class="field color-picker-field">
+            <label>Sua cor de identificação</label>
+            <div class="color-options" id="colorOptions">
+                </div>
+        </div>
+        <button type="button" id="loginBtn">
+            <i class="fas fa-sign-in-alt"></i> Iniciar Testes
+        </button>
+    </div>
+</div>
+
+<div class="app" id="mainApp" style="display: none;">
+    <div class="tester-name-display" id="testerNameDisplay">
+        <i class="fas fa-user-circle"></i> <span id="testerNameText"></span>
+    </div>
+    
+    <h1><i class="fas fa-clipboard-list" style="margin-right:10px;"></i>Registro de Testes</h1>
+
+    <form id="dataForm">
+        <div class="field">
+            <label for="modelo">Modelo do Dispositivo</label>
+            <select id="modelo" name="modelo" required>
+                <option value="" disabled selected>Selecione o modelo</option>
+                <option value="HF801">HF801</option>
+                <option value="HF810">HF810</option>
+                <option value="HF900">HF900</option>
+                <option value="HF405">HF405</option>
+                <option value="HF918">HF918</option>
+            </select>
+        </div>
+
+        <div class="field hidden" id="clienteField">
+            <label for="cliente">Nome do Cliente</label>
+            <input type="text" id="cliente" name="cliente" placeholder="Ex: João Silva" required />
+        </div>
+
+        <fieldset class="hidden" id="componentesField">
+            <legend>Status dos Componentes</legend>
+            <div class="components" id="components"></div>
+        </fieldset>
+
+        <button type="submit" class="hidden" id="enviarBtn"><i class="fas fa-paper-plane" style="margin-right: 8px;"></i>Enviar Teste</button>
+    </form>
+    <div id="status" aria-live="polite"></div>
+</div>
+
+<button class="help-btn" id="helpBtn" title="Ajuda e Guia de Uso"> <i class="fas fa-question-circle"></i> </button>
+<button class="view-records-btn" id="viewRecordsBtn" title="Visualizar Registros de Testes"> <i class="fas fa-history"></i> </button>
+
+<div class="guide-modal modal-overlay" id="guideModal"> <div class="guide-content modal-content"> <div class="guide-header">
+            <h2><i class="fas fa-book-open" style="margin-right:10px;"></i>Guia de Uso</h2>
+            <button class="close-guide-btn" id="closeGuideBtn" title="Fechar Guia">&times;</button>
+        </div>
+        <div class="guide-section">
+            <h3><i class="fas fa-tasks" style="margin-right:8px;"></i>Como registrar um teste</h3>
+            <ol>
+                <li>Selecione o <strong>modelo</strong> do dispositivo no menu suspenso.</li>
+                <li>Informe o <strong>nome do cliente</strong> no campo correspondente.</li>
+                <li>Clique em cada componente para alterar seu status:
+                    <ul>
+                        <li><i class="fas fa-minus-circle" style="color:var(--na-text)"></i> <strong>N/A</strong> (Não Aplicável): O componente não se aplica ao modelo ou não foi testado.</li>
+                        <li><i class="fas fa-check-circle" style="color:var(--success-border)"></i> <strong>OK</strong>: O componente está funcionando corretamente.</li>
+                        <li><i class="fas fa-times-circle" style="color:var(--failure-border)"></i> <strong>FALHA</strong>: O componente apresenta problemas. Se marcar como falha, um campo para <strong>observações</strong> sobre o defeito aparecerá.</li>
+                    </ul>
+                </li>
+                <li>Após verificar todos os componentes, clique em "Enviar Teste".</li>
+                <li>Uma janela de confirmação surgirá. O foco estará no botão "Confirmar". Você pode adicionar uma <strong>observação geral</strong> para o teste (opcional) e então confirmar o envio.</li>
+            </ol>
+        </div>
+        <div class="guide-section">
+            <h3><i class="fas fa-eye" style="margin-right:8px;"></i>Como visualizar registros</h3>
+            <p>Clique no botão <i class="fas fa-history"></i> flutuante no canto inferior direito da tela para abrir a lista. Serão exibidos os <strong>5 testes mais recentes</strong>. A coluna "Testador" foi removida.</p>
+        </div>
+        <div class="guide-section">
+            <h3><i class="fas fa-trash-alt" style="margin-right:8px;"></i>Como excluir um registro</h3>
+            <p>Na tela de visualização de registros, <strong>mantenha pressionado</strong> (clique longo) um registro por aproximadamente <strong>3 segundos</strong>. Uma confirmação para exclusão aparecerá.</p>
+        </div>
+        <div class="guide-section">
+            <h3><i class="fas fa-info-circle" style="margin-right:8px;"></i>Dúvidas Frequentes</h3>
+            <p><strong>P:</strong> Posso editar um teste depois de enviado?<br>
+            <strong>R:</strong> Não. Uma vez enviado, o registro do teste não pode ser editado. Se houver um erro, você precisará excluir o registro incorreto e criar um novo.</p>
+            <p><strong>P:</strong> O que significa "N/A" em um componente?<br>
+            <strong>R:</strong> Significa que o componente não está presente no modelo específico que está sendo testado, ou que, por algum motivo, sua verificação não foi aplicável ou realizada.</p>
+        </div>
+    </div>
+</div>
+
+<div class="records-modal modal-overlay" id="recordsModal"> <div class="records-content modal-content"> <div class="records-header">
+            <h2><i class="fas fa-archive" style="margin-right:10px;"></i>Registros de Testes</h2>
+            <button class="close-records-btn" id="closeRecordsBtn" title="Fechar Registros">&times;</button>
+        </div>
+        <div class="loading-message" id="loadingData">Carregando dados...</div>
+        <div class="data-table-container">
+            <table class="data-table" id="dataTable">
+                <thead>
+                    <tr>
+                        <th>Data/Hora</th>
+                        <th>Modelo</th>
+                        <th>Cliente</th>
+                        </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+        </div>
+        <div id="recordsStatus" class="records-status" aria-live="polite"></div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="confirmSendModal">
+    <div class="modal-content">
+        <h2><i class="fas fa-question-circle" style="color: var(--primary-color); margin-right: 8px;"></i>Confirmar Envio?</h2>
+        <p>Revise os dados se necessário. Deseja prosseguir e enviar este registro de teste?</p>
+        <div class="field">
+            <label for="observacao">Observação Geral (opcional)</label>
+            <textarea id="observacao" placeholder="Adicione qualquer observação relevante para o teste geral aqui..."></textarea>
+        </div>
+        <div class="modal-actions">
+            <button type="button" class="cancel" id="cancelSend"><i class="fas fa-times" style="margin-right: 6px;"></i>Cancelar</button>
+            <button type="button" class="confirm" id="confirmSend"><i class="fas fa-check" style="margin-right: 6px;"></i>Confirmar</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="confirmDeleteModal">
+    <div class="modal-content delete">
+        <h2><i class="fas fa-exclamation-triangle" style="color: var(--failure-border); margin-right: 8px;"></i>Apagar Registro?</h2>
+        <p>Esta ação é irreversível. Tem certeza que deseja apagar permanentemente este registro?</p>
+        <p>Registro: <strong id="deleteRecordInfo"></strong></p>
+        <div class="modal-actions">
+            <button type="button" class="cancel" id="cancelDelete"><i class="fas fa-times" style="margin-right: 6px;"></i>Cancelar</button>
+            <button type="button" class="delete-btn" id="confirmDelete"><i class="fas fa-trash-alt" style="margin-right: 6px;"></i>Sim, Apagar</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="feedbackModal">
+    <div class="modal-content feedback">
+        <h2><i class="fas fa-bug" style="color: var(--accent-color); margin-right: 8px;"></i>Enviar Feedback</h2>
+        <p>Compartilhe suas sugestões, bugs ou melhorias.</p>
+        
+        <div class="field">
+            <label for="feedbackType">Tipo de Feedback</label>
+            <select id="feedbackType">
+                <option value="bug">Bug / Erro</option>
+                <option value="melhoria">Sugestão de Melhoria</option>
+                <option value="outros">Outros</option>
+            </select>
+        </div>
+        
+        <div class="field">
+            <label for="feedbackDescription">Descrição</label>
+            <textarea id="feedbackDescription" placeholder="Descreva o feedback em detalhes..."></textarea>
+        </div>
+        <div id="feedbackStatus" class="records-status" aria-live="polite"></div>
+
+        <div class="modal-actions">
+            <button type="button" class="cancel" id="cancelFeedback"><i class="fas fa-times" style="margin-right: 6px;"></i>Cancelar</button>
+            <button type="button" class="submit-feedback-btn" id="submitFeedbackBtn"><i class="fas fa-paper-plane" style="margin-right: 6px;"></i>Enviar</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyE4h4LL3vk8n0m2A0C3p3n6Plz9w9YV0Ip_N8CpBpIk9VRKQmSkIWmzDL05XgdVKmlmw/exec';
+
+    const componentes = [
+        { id: 'aht10', label: 'AHT10' }, { id: 'botao_esquerdo', label: 'Botão Esquerdo' },
+        { id: 'botao_central', label: 'Botão Central' }, { id: 'botao_direito', label: 'Botão Direito' },
+        { id: 'botao_reset', label: 'Botão Reset' }, { id: 'certificado', label: 'Certificado' },
+        { id: 'conector_mola', label: 'Conector Mola' }, { id: 'esp32', label: 'ESP32' },
+        { id: 'display', label: 'Display' }, { id: 'led_azul', label: 'LED Azul' },
+        { id: 'ledrgb', label: 'LED RGB' }, { id: 'ldr', label: 'LDR' },
+        { id: 'ntc', label: 'NTC' }, { id: 'relay', label: 'Relay' },
+        { id: 'tm1637', label: 'TM1637' }, { id: 'watchdog', label: 'Watchdog' },
+        { id: 'serigrafia', label: 'Serigrafia' }
+    ];
+
+    const STATUS_NA = 'N/A'; const STATUS_OK = 'OK'; const STATUS_FALHA = 'FALHA';
+    const statusIcons = {
+        [STATUS_NA]: 'fas fa-minus-circle', [STATUS_OK]: 'fas fa-check-circle', [STATUS_FALHA]: 'fas fa-times-circle'
+    };
+    const statusCycle = [STATUS_NA, STATUS_OK, STATUS_FALHA];
+    const hideMap = { 'HF801': ['aht10'], 'HF810': ['aht10'], 'HF900': ['aht10'], 'HF405': ['aht10', 'ntc'], 'HF918': ['ntc'] };
+
+    const loginScreen = document.getElementById('loginScreen');
+    const testerNameInput = document.getElementById('testerName');
+    const loginBtn = document.getElementById('loginBtn');
+    const mainApp = document.getElementById('mainApp');
+    const testerNameDisplay = document.getElementById('testerNameDisplay');
+    const testerNameText = document.getElementById('testerNameText');
+    
+    const colorOptionsContainer = document.getElementById('colorOptions');
+    // MODIFIED: One color removed from the array
+    const softColors = [
+        { name: 'Azul Suave', hex: '#DBEAFE' },
+        { name: 'Verde Suave', hex: '#D1FAE5' },
+        { name: 'Rosa Suave', hex: '#FEE2E2' },
+        { name: 'Roxo Suave', hex: '#E0E7FF' },
+        { name: 'Cinza Suave', hex: '#E5E7EB' }
+    ];
+    let testerName = '';
+    let testerColor = softColors[0].hex; // Default color
+
+    const modeloSelect = document.getElementById('modelo');
+    const clienteInput = document.getElementById('cliente');
+    const clienteField = document.getElementById('clienteField');
+    const componentesField = document.getElementById('componentesField');
+    const componentsDiv = document.getElementById('components');
+    const enviarBtn = document.getElementById('enviarBtn');
+    const form = document.getElementById('dataForm');
+    const statusDiv = document.getElementById('status');
+
+    const confirmSendModal = document.getElementById('confirmSendModal');
+    const observacaoTextarea = document.getElementById('observacao');
+    const confirmSendBtn = document.getElementById('confirmSend');
+    const cancelSendBtn = document.getElementById('cancelSend');
+
+    const confirmDeleteModal = document.getElementById('confirmDeleteModal');
+    const deleteRecordInfo = document.getElementById('deleteRecordInfo');
+    const confirmDeleteBtn = document.getElementById('confirmDelete');
+    const cancelDeleteBtn = document.getElementById('cancelDelete');
+    let recordToDelete = null;
+
+    const viewRecordsBtn = document.getElementById('viewRecordsBtn');
+    const recordsModal = document.getElementById('recordsModal');
+    const closeRecordsBtn = document.getElementById('closeRecordsBtn');
+    const tableBody = document.getElementById('tableBody');
+    const loadingData = document.getElementById('loadingData');
+    const recordsStatusDiv = document.getElementById('recordsStatus');
+
+    const helpBtn = document.getElementById('helpBtn');
+    const guideModal = document.getElementById('guideModal');
+    const closeGuideBtn = document.getElementById('closeGuideBtn');
+
+    // NEW: Feedback Modal Elements
+    const feedbackModal = document.getElementById('feedbackModal');
+    const feedbackTypeSelect = document.getElementById('feedbackType');
+    const feedbackDescriptionTextarea = document.getElementById('feedbackDescription');
+    const submitFeedbackBtn = document.getElementById('submitFeedbackBtn');
+    const cancelFeedbackBtn = document.getElementById('cancelFeedback');
+    const feedbackStatusDiv = document.getElementById('feedbackStatus'); // For displaying feedback messages
+
+
+    let estadoComponentes = {};
+    enviarBtn.dataset.originalHtml = enviarBtn.innerHTML;
+
+    function showStatusMessage(element, message, type = 'success') {
+        element.textContent = message;
+        element.className = `records-status active ${type}`; 
+        if (element.id === 'status' || element.id === 'feedbackStatus') { // Added feedbackStatus
+            element.className = `active ${type}`; 
+        }
+    }
+
+    function clearStatusMessage(element) {
+        element.textContent = '';
+        element.className = (element.id === 'status' || element.id === 'feedbackStatus') ? '' : 'records-status'; // Added feedbackStatus
+    }
+
+    loginBtn.addEventListener('click', () => {
+        const name = testerNameInput.value.trim();
+        testerNameInput.style.borderColor = 'var(--border-color)';
+        testerNameInput.style.animation = '';
+        if (name === '') {
+            testerNameInput.focus();
+            testerNameInput.style.borderColor = 'var(--failure-border)';
+            testerNameInput.style.animation = 'shake 0.5s';
+            return;
+        }
+        testerName = name;
+        testerNameText.textContent = testerName;
+        testerNameDisplay.style.backgroundColor = testerColor;
+        testerNameDisplay.style.color = getContrastingTextColor(testerColor);
+
+        loginScreen.classList.add('hidden-auth');
+        mainApp.style.display = 'flex';
+        setTimeout(() => { loginScreen.style.display = 'none'; }, 500);
+        modeloSelect.focus();
+    });
+    
+    function getContrastingTextColor(hexcolor){
+        if (hexcolor.slice(0, 1) === '#') { hexcolor = hexcolor.slice(1); }
+        const r = parseInt(hexcolor.substr(0,2),16);
+        const g = parseInt(hexcolor.substr(2,2),16);
+        const b = parseInt(hexcolor.substr(4,2),16);
+        const yiq = ((r*299)+(g*587)+(b*114))/1000;
+        return (yiq >= 128) ? '#1F2937' : 'white';
+    }
+
+
+    testerNameInput.addEventListener('keypress', (event) => { if (event.key === "Enter") { event.preventDefault(); loginBtn.click(); } });
+
+    modeloSelect.addEventListener('change', () => {
+        const modelo = modeloSelect.value;
+        clienteInput.value = '';
+        if (modelo) {
+            clienteField.classList.remove('hidden');
+            componentesField.classList.remove('hidden');
+            enviarBtn.classList.remove('hidden');
+            clienteInput.focus();
+        } else {
+            clienteField.classList.add('hidden');
+            componentesField.classList.add('hidden');
+            enviarBtn.classList.add('hidden');
+        }
+        clearStatusMessage(statusDiv);
+        generarComponentes(modelo);
+    });
+
+    function generarComponentes(modelo) {
+        componentsDiv.innerHTML = '';
+        estadoComponentes = {};
+        if (!modelo) return;
+        let effectiveHideList = [...(hideMap[modelo] || [])];
+        const botaoCentralId = 'botao_central';
+        if (modelo === 'HF918') {
+            const index = effectiveHideList.indexOf(botaoCentralId);
+            if (index > -1) { effectiveHideList.splice(index, 1); }
+        } else {
+            if (!effectiveHideList.includes(botaoCentralId)) { effectiveHideList.push(botaoCentralId); }
+        }
+        componentes.forEach(comp => {
+            if (!effectiveHideList.includes(comp.id)) {
+                estadoComponentes[comp.id] = { status: STATUS_NA, obs: '' };
+                const div = document.createElement('div');
+                div.className = 'component status-na';
+                div.dataset.componentId = comp.id;
+                div.setAttribute('tabindex', '0');
+                const icon = document.createElement('i');
+                icon.className = `icon ${statusIcons[STATUS_NA]}`;
+                const nome = document.createElement('span');
+                nome.textContent = comp.label;
+                const obsTextarea = document.createElement('textarea');
+                obsTextarea.className = 'component-obs hidden';
+                obsTextarea.placeholder = 'Detalhe a falha aqui...';
+                obsTextarea.setAttribute('aria-label', `Observação para ${comp.label}`);
+                obsTextarea.addEventListener('click', (e) => e.stopPropagation());
+                obsTextarea.addEventListener('input', (e) => { estadoComponentes[comp.id].obs = e.target.value; });
+                div.append(icon, nome, obsTextarea);
+                componentsDiv.appendChild(div);
+                const changeStatus = () => {
+                    let cs = estadoComponentes[comp.id].status;
+                    let ni = (statusCycle.indexOf(cs) + 1) % statusCycle.length;
+                    let ns = statusCycle[ni];
+                    estadoComponentes[comp.id].status = ns;
+                    div.classList.remove('status-na', 'status-ok', 'status-falha');
+                    div.classList.add(`status-${ns === STATUS_NA ? 'na' : ns.toLowerCase()}`);
+                    icon.className = `icon ${statusIcons[ns]}`;
+                    if (ns === STATUS_FALHA) {
+                        obsTextarea.classList.remove('hidden'); obsTextarea.focus();
+                    } else {
+                        obsTextarea.classList.add('hidden');
+                        if(estadoComponentes[comp.id].status !== STATUS_FALHA) {
+                            obsTextarea.value = ''; estadoComponentes[comp.id].obs = '';
+                        }
+                    }
+                };
+                div.addEventListener('click', changeStatus);
+                div.addEventListener('keypress', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); changeStatus(); } });
+            } else { estadoComponentes[comp.id] = { status: STATUS_NA, obs: '' }; }
+        });
+    }
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        if (!modeloSelect.value) { showStatusMessage(statusDiv, 'Por favor, selecione um modelo.', 'error'); modeloSelect.focus(); return; }
+        if (!clienteInput.value.trim()) { showStatusMessage(statusDiv, 'Por favor, informe o nome do cliente.', 'error'); clienteInput.focus(); return; }
+        clearStatusMessage(statusDiv);
+        confirmSendModal.classList.add('visible');
+        confirmSendBtn.focus();
+    });
+
+    confirmSendBtn.addEventListener('click', () => {
+        confirmSendModal.classList.remove('visible');
+        enviarBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i>Enviando...';
+        enviarBtn.disabled = true;
+        enviarDados();
+    });
+
+    cancelSendBtn.addEventListener('click', () => {
+        confirmSendModal.classList.remove('visible');
+        enviarBtn.disabled = false;
+        enviarBtn.innerHTML = enviarBtn.dataset.originalHtml;
+        observacaoTextarea.value = '';
+    });
+
+    function enviarDados() {
+        const dataPayload = { 
+            action: 'create', 
+            data: new Date().toISOString(), 
+            modelo: form.modelo.value, 
+            cliente: form.cliente.value, 
+            nome_tester: testerName, 
+            tester_color: testerColor,
+            observacao: observacaoTextarea.value.trim() 
+        };
+        componentes.forEach(comp => {
+            const compState = estadoComponentes[comp.id];
+            if (compState) {
+                dataPayload[comp.id] = compState.status;
+                if (compState.status === STATUS_FALHA && compState.obs.trim() !== '') { dataPayload[comp.id] += ` (${compState.obs.trim()})`; }
+            } else { dataPayload[comp.id] = STATUS_NA; }
+        });
+        fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(dataPayload) })
+        .then(() => {
+            showStatusMessage(statusDiv, 'Dados enviados com sucesso! (Confirmação pendente do servidor)', 'success');
+            form.reset(); componentsDiv.innerHTML = '';
+            clienteField.classList.add('hidden'); componentesField.classList.add('hidden');
+            enviarBtn.classList.add('hidden'); estadoComponentes = {};
+            observacaoTextarea.value = ''; modeloSelect.value = "";
+        }).catch(err => {
+            showStatusMessage(statusDiv, 'Erro ao tentar enviar os dados: ' + err.message, 'error');
+        }).finally(() => {
+            enviarBtn.disabled = false; enviarBtn.innerHTML = enviarBtn.dataset.originalHtml;
+        });
+    }
+
+    viewRecordsBtn.addEventListener('click', () => { recordsModal.classList.add('visible'); fetchDataAndDisplay(); });
+    closeRecordsBtn.addEventListener('click', () => { recordsModal.classList.remove('visible'); });
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            if (recordsModal.classList.contains('visible')) recordsModal.classList.remove('visible');
+            if (guideModal.classList.contains('visible')) guideModal.classList.remove('visible');
+            if (confirmSendModal.classList.contains('visible')) {
+                confirmSendModal.classList.remove('visible');
+                if (!enviarBtn.disabled) enviarBtn.innerHTML = enviarBtn.dataset.originalHtml;
+            }
+            if (confirmDeleteModal.classList.contains('visible')) confirmDeleteModal.classList.remove('visible');
+            if (feedbackModal.classList.contains('visible')) feedbackModal.classList.remove('visible'); // NEW: Close feedback modal
+        }
+    });
+
+    async function fetchDataAndDisplay() {
+        loadingData.classList.remove('hidden');
+        clearStatusMessage(recordsStatusDiv);
+        tableBody.innerHTML = '';
+        try {
+            const response = await fetch(`${SCRIPT_URL}?v=${new Date().getTime()}`, { method: 'GET' });
+            if (!response.ok) throw new Error(`Erro HTTP: ${response.status} ${response.statusText}`);
+            const data = await response.json();
+            
+            const totalRecords = data.length;
+            if (totalRecords === 0) {
+                showStatusMessage(recordsStatusDiv, 'Nenhum registro encontrado.', 'success'); 
+                loadingData.classList.add('hidden');
+                return;
+            }
+
+            data.sort((a, b) => new Date(b.data) - new Date(a.data));
+            const recentData = data.slice(0, 5); 
+
+            recentData.forEach(item => { 
+                const row = document.createElement('tr');
+                row.dataset.recordRawDate = item.data;
+                row.setAttribute('tabindex', '0');
+                let pressTimer, PRESS_DURATION = 3000;
+                const startPress = (e) => { e.preventDefault(); row.classList.add('long-press-active'); pressTimer = setTimeout(() => { row.classList.remove('long-press-active'); showDeleteConfirmation(item); }, PRESS_DURATION); };
+                const endPress = () => { clearTimeout(pressTimer); row.classList.remove('long-press-active'); };
+                ['mousedown', 'touchstart'].forEach(evt => row.addEventListener(evt, startPress, evt === 'touchstart' ? { passive: false } : false));
+                ['mouseup', 'mouseleave', 'touchend', 'touchcancel'].forEach(evt => row.addEventListener(evt, endPress));
+                
+                const dataCell = document.createElement('td');
+                try { const date = new Date(item.data); dataCell.textContent = date.toLocaleDateString('pt-BR', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' }); dataCell.setAttribute('title', date.toISOString()); } catch (e) { dataCell.textContent = item.data || 'Data inválida'; }
+                row.appendChild(dataCell);
+                
+                ['modelo', 'cliente'].forEach(key => {
+                    const cell = document.createElement('td'); cell.textContent = item[key] || 'N/I'; row.appendChild(cell);
+                });
+                tableBody.appendChild(row);
+            });
+
+            if (recentData.length > 0) {
+                let message = `Exibindo ${recentData.length} registro(s) mais recente(s).`;
+                if (totalRecords > 5) {
+                    message = `Exibindo os 5 registros mais recentes (de um total de ${totalRecords}).`;
+                } else {
+                     message = `Dados carregados. Total: ${totalRecords} registro(s).`;
+                }
+                showStatusMessage(recordsStatusDiv, message, 'success');
+            } else {
+                showStatusMessage(recordsStatusDiv, 'Nenhum registro encontrado para exibir.', 'success');
+            }
+
+        } catch (error) {
+            console.error('Erro ao buscar dados:', error);
+            showStatusMessage(recordsStatusDiv, 'Falha ao carregar os registros: ' + error.message, 'error');
+        } finally {
+            loadingData.classList.add('hidden');
+        }
+    }
+
+    function showDeleteConfirmation(record) {
+        recordToDelete = record;
+        deleteRecordInfo.textContent = `${record.modelo} - ${record.cliente} (Data: ${new Date(record.data).toLocaleDateString('pt-BR')})`;
+        confirmDeleteModal.classList.add('visible');
+        confirmDeleteBtn.focus();
+    }
+
+    confirmDeleteBtn.addEventListener('click', () => {
+        if (recordToDelete && recordToDelete.data) { deleteRecord(recordToDelete.data); } 
+        else { 
+            console.error("Informação do registro para exclusão está incompleta.", recordToDelete);
+            showStatusMessage(recordsStatusDiv, 'Erro: Informação do registro para exclusão está incompleta.', 'error');
+        }
+        recordToDelete = null; confirmDeleteModal.classList.remove('visible');
+    });
+    cancelDeleteBtn.addEventListener('click', () => { recordToDelete = null; confirmDeleteModal.classList.remove('visible'); });
+
+    async function deleteRecord(recordDateISO) {
+        clearStatusMessage(recordsStatusDiv);
+        loadingData.classList.remove('hidden');
+        showStatusMessage(recordsStatusDiv, 'Excluindo registro...', 'success'); 
+        try {
+            const payload = { action: 'delete', data: recordDateISO };
+            await fetch(SCRIPT_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify(payload) });
+            showStatusMessage(recordsStatusDiv, 'Solicitação de exclusão enviada. Atualizando lista...', 'success');
+            fetchDataAndDisplay();
+        } catch (error) {
+            console.error('Erro ao excluir registro:', error);
+            showStatusMessage(recordsStatusDiv, 'Erro ao tentar excluir o registro: ' + error.message, 'error');
+        }
+    }
+
+    helpBtn.addEventListener('click', () => { guideModal.classList.add('visible'); });
+    closeGuideBtn.addEventListener('click', () => { guideModal.classList.remove('visible'); });
+    
+    function createColorSwatches() {
+        softColors.forEach(color => {
+            const swatch = document.createElement('div');
+            swatch.className = 'color-option';
+            swatch.style.backgroundColor = color.hex;
+            swatch.dataset.color = color.hex;
+            swatch.title = color.name;
+            swatch.setAttribute('role', 'button');
+            swatch.setAttribute('tabindex', '0');
+
+            if (color.hex === testerColor) {
+                swatch.classList.add('selected');
+            }
+            colorOptionsContainer.appendChild(swatch);
+        });
+    }
+
+    colorOptionsContainer.addEventListener('click', (e) => {
+        const target = e.target;
+        if (target.classList.contains('color-option')) {
+            const currentSelected = colorOptionsContainer.querySelector('.selected');
+            if (currentSelected) {
+                currentSelected.classList.remove('selected');
+            }
+            target.classList.add('selected');
+            testerColor = target.dataset.color;
+        }
+    });
+
+    colorOptionsContainer.addEventListener('keypress', (e) => {
+        if ((e.key === 'Enter' || e.key === ' ') && e.target.classList.contains('color-option')) {
+            e.preventDefault();
+            e.target.click();
+        }
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        testerNameInput.focus();
+        createColorSwatches();
+        mainApp.style.display = 'none';
+        loginScreen.classList.remove('hidden-auth');
+    });
+
+    // NEW: Feedback functionality
+    let feedbackPressTimer;
+    const FEEDBACK_PRESS_DURATION = 4000; // 4 seconds
+
+    testerNameDisplay.addEventListener('mousedown', (e) => {
+        if (e.button === 0) { // Only for left click
+            testerNameDisplay.classList.add('long-press-active');
+            feedbackPressTimer = setTimeout(() => {
+                testerNameDisplay.classList.remove('long-press-active');
+                showFeedbackModal();
+            }, FEEDBACK_PRESS_DURATION);
+        }
+    });
+
+    testerNameDisplay.addEventListener('mouseup', () => {
+        clearTimeout(feedbackPressTimer);
+        testerNameDisplay.classList.remove('long-press-active');
+    });
+
+    testerNameDisplay.addEventListener('mouseleave', () => {
+        clearTimeout(feedbackPressTimer);
+        testerNameDisplay.classList.remove('long-press-active');
+    });
+
+    // For touch devices
+    testerNameDisplay.addEventListener('touchstart', (e) => {
+        testerNameDisplay.classList.add('long-press-active');
+        feedbackPressTimer = setTimeout(() => {
+            testerNameDisplay.classList.remove('long-press-active');
+            showFeedbackModal();
+        }, FEEDBACK_PRESS_DURATION);
+    }, { passive: false }); // Use passive: false to allow preventDefault
+
+    testerNameDisplay.addEventListener('touchend', () => {
+        clearTimeout(feedbackPressTimer);
+        testerNameDisplay.classList.remove('long-press-active');
+    });
+
+    testerNameDisplay.addEventListener('touchcancel', () => {
+        clearTimeout(feedbackPressTimer);
+        testerNameDisplay.classList.remove('long-press-active');
+    });
+
+
+    function showFeedbackModal() {
+        clearStatusMessage(feedbackStatusDiv);
+        feedbackDescriptionTextarea.value = ''; // Clear previous input
+        feedbackTypeSelect.value = 'bug'; // Reset to default
+        feedbackModal.classList.add('visible');
+        feedbackDescriptionTextarea.focus();
+    }
+
+    cancelFeedbackBtn.addEventListener('click', () => {
+        feedbackModal.classList.remove('visible');
+        clearStatusMessage(feedbackStatusDiv);
+    });
+
+    submitFeedbackBtn.addEventListener('click', async () => {
+        const type = feedbackTypeSelect.value;
+        const description = feedbackDescriptionTextarea.value.trim();
+
+        if (description === '') {
+            showStatusMessage(feedbackStatusDiv, 'Por favor, descreva seu feedback.', 'error');
+            feedbackDescriptionTextarea.focus();
+            return;
+        }
+
+        clearStatusMessage(feedbackStatusDiv);
+        submitFeedbackBtn.disabled = true;
+        submitFeedbackBtn.innerHTML = '<i class="fas fa-spinner fa-spin" style="margin-right: 8px;"></i>Enviando...';
+
+        try {
+            const payload = {
+                action: 'submitFeedback',
+                timestamp: new Date().toISOString(),
+                nome_tester: testerName,
+                tipo: type,
+                descricao: description
+            };
+
+            await fetch(SCRIPT_URL, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            showStatusMessage(feedbackStatusDiv, 'Feedback enviado com sucesso! Agradecemos sua contribuição.', 'success');
+            setTimeout(() => {
+                feedbackModal.classList.remove('visible');
+                clearStatusMessage(feedbackStatusDiv);
+            }, 2500); // Close modal after 2.5 seconds
+            
+        } catch (error) {
+            console.error('Erro ao enviar feedback:', error);
+            showStatusMessage(feedbackStatusDiv, 'Falha ao enviar feedback: ' + error.message, 'error');
+        } finally {
+            submitFeedbackBtn.disabled = false;
+            submitFeedbackBtn.innerHTML = '<i class="fas fa-paper-plane" style="margin-right: 6px;"></i>Enviar';
+        }
+    });
+</script>
+</body>
+</html>
